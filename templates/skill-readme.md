@@ -24,17 +24,22 @@
 <div align="center">
 
 <!-- Badges: pick the most relevant 4-6 -->
-[![License: <license>](https://img.shields.io/badge/License-<license>-<color>.svg)](<license-url>)
-[![Version](https://img.shields.io/badge/version-<version>-blue.svg)](<releases-url>)
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-DA7857?logo=anthropic)](https://agentskills.io)
+[![License: <license>][license-shield]][license-url]
+[![Version][version-shield]][version-url]
+[![Agent Skills][skills-shield]][skills-url]
 
 </div>
 
+<!-- Optional social proof for public repositories with real numbers only.
+[![GitHub stars][stars-shield]][stars-url]
+[![Contributors][contributors-shield]][contributors-url]
+-->
+
 <div align="center">
+  <a href="#the-problem">Why</a> &middot;
   <a href="#usage">Usage</a> &middot;
   <a href="#install">Install</a> &middot;
-  <a href="#how-it-works">How It Works</a> &middot;
-  <a href="<docs-url>">Docs</a>
+  <a href="<docs-or-demo-url>">Docs</a>
 </div>
 
 <br>
@@ -56,7 +61,7 @@
 
 <How the skill solves the problem. Show the workflow or key capabilities. Use a code block, table, or bullet list — whichever communicates fastest.>
 
-```
+```text
 <visual workflow diagram or pipeline, if applicable>
 ```
 
@@ -64,13 +69,15 @@
 
 <Trigger phrases that activate this skill. What does the user say?>
 
-```
+```text
 "<trigger phrase 1>"
 "<trigger phrase 2>"
 "<trigger phrase 3>"
 ```
 
-**Example:**
+**Example**
+
+Sample flow, unless you replace it with a verified run:
 
 > User: "<example prompt>"
 >
@@ -78,6 +85,21 @@
 > 1. <step 1>
 > 2. <step 2>
 > 3. <step 3>
+
+<!-- Optional GitHub-native enhancement:
+Add Mermaid only if a flow, architecture, or interaction model is clearer as a diagram.
+If deeper reference material would crowd the README, move it into docs/ with relative links. -->
+
+## Architecture At A Glance
+
+<!-- Delete this section if a diagram would not explain faster than prose. -->
+
+```mermaid
+flowchart TD
+  UserPrompt --> SkillTrigger
+  SkillTrigger --> RepoScan
+  RepoScan --> ReadmeOutput
+```
 
 ## Install
 
@@ -92,6 +114,8 @@ npx skills add <org>/<skill-name>
 git clone https://github.com/<org>/<skill-name> ~/skills/<skill-name>
 
 # Pick only the roots you actually use.
+# You do not need to register every platform.
+# If a root does not exist yet, create it only intentionally.
 
 # Claude Code
 ln -sfn ~/skills/<skill-name> ~/.claude/skills/<skill-name>
@@ -102,7 +126,7 @@ ln -sfn ~/skills/<skill-name> ~/.agents/skills/<skill-name>
 # VS Code / GitHub Copilot
 ln -sfn ~/skills/<skill-name> ~/.copilot/skills/<skill-name>
 
-# Cursor
+# Cursor (if your setup ignores the symlink, use a real copy instead)
 ln -sfn ~/skills/<skill-name> ~/.cursor/skills/<skill-name>
 
 # Windsurf
@@ -110,6 +134,22 @@ ln -sfn ~/skills/<skill-name> ~/.codeium/windsurf/skills/<skill-name>
 ```
 
 </details>
+
+## Works Better With
+
+<Optional. Include only when recommended skills provide a real enhancement without becoming required dependencies. Delete this section if not used.>
+
+- [`<org>/<recommended-skill>`](https://github.com/<org>/<recommended-skill>) — <specific enhancement>. Install: `npx skills add <org>/<recommended-skill>`
+
+This skill still works fully on its own.
+
+## Further Reading
+
+<!-- Delete this section if everything important fits in README.md. -->
+
+- [Design Notes](docs/design.md)
+- [Formatting Rules](docs/formatting.md)
+- [Examples](docs/examples.md)
 
 ---
 
@@ -127,7 +167,7 @@ ln -sfn ~/skills/<skill-name> ~/.codeium/windsurf/skills/<skill-name>
 <details>
 <summary><strong>What's Inside</strong></summary>
 
-```
+```text
 SKILL.md              — <short description>
 references/           — <if applicable>
   <file>.md           — <what it contains>
@@ -148,16 +188,17 @@ scripts/              — <if applicable>
 
 </details>
 
-<details>
-<summary><strong>Contributing</strong></summary>
+## Contributing
 
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+<!-- If you don't have a separate CONTRIBUTING.md, replace this section with
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/<name>`)
 3. Commit your changes
 4. Push to the branch
 5. Open a Pull Request
-
-</details>
+-->
 
 ## License
 
@@ -167,6 +208,14 @@ scripts/              — <if applicable>
 
 Forged with [Skill Forge](https://github.com/<org>/skill-forge)
 
-<!-- Reference-style links (define all badge URLs here for cleaner source) -->
+<!-- Reference-style link definitions -->
+[license-shield]: https://img.shields.io/badge/License-<license>-<color>.svg
+[license-url]: <license-url>
+[version-shield]: https://img.shields.io/badge/version-<version>-blue.svg
+[version-url]: <releases-url>
+[skills-shield]: https://img.shields.io/badge/Agent%20Skills-compatible-DA7857?logo=anthropic
+[skills-url]: https://agentskills.io
+<!-- [stars-shield]: https://img.shields.io/github/stars/<org>/<skill-name>?style=social -->
+<!-- [stars-url]: https://github.com/<org>/<skill-name>/stargazers -->
 <!-- [contributors-shield]: https://img.shields.io/github/contributors/<org>/<skill-name>.svg -->
-<!-- [license-shield]: https://img.shields.io/github/license/<org>/<skill-name>.svg -->
+<!-- [contributors-url]: https://github.com/<org>/<skill-name>/graphs/contributors -->

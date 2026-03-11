@@ -33,6 +33,13 @@
 
 </div>
 
+<!-- Optional social proof for public repositories with real numbers only.
+Add only if the project benefits from it and the user wants it.
+
+[![GitHub stars][stars-shield]][stars-url]
+[![Contributors][contributors-shield]][contributors-url]
+-->
+
 <!-- Quick action links -->
 <div align="center">
   <a href="#quick-start">Quick Start</a> &middot;
@@ -64,6 +71,17 @@
 - <feature 2 — brief description>
 - <feature 3 — brief description>
 - <feature 4 — brief description>
+
+## Architecture At A Glance
+
+<!-- Delete this section if a diagram would not explain faster than prose. -->
+
+```mermaid
+flowchart TD
+  <entry-point> --> <core-module>
+  <core-module> --> <integration-or-api>
+  <integration-or-api> --> <storage-or-output>
+```
 
 ## Quick Start
 
@@ -143,6 +161,18 @@ cd <repo>
 
 </details>
 
+## Further Reading
+
+<!-- Delete this section if everything important fits in README.md. -->
+
+- [Architecture](docs/architecture.md)
+- [Configuration](docs/configuration.md)
+- [FAQ](docs/faq.md)
+
+<!-- Optional GitHub-native enhancement:
+Add a Mermaid diagram only when architecture, flow, or sequence is clearer visually than in prose.
+If the README grows too long, move deep explanations into docs/ and link them relatively. -->
+
 ---
 
 <!-- ============================================================ -->
@@ -188,7 +218,7 @@ See the full [API Documentation](<docs-url/api>).
 <details>
 <summary><strong>Project Structure</strong></summary>
 
-```
+```text
 <repo>/
 ├── src/                  # Source code
 │   ├── <module>/         # <description>
@@ -256,6 +286,10 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 - <acknowledgment 1>
 - <acknowledgment 2>
 
+<!-- Optional social proof:
+Add contributor widgets, stars, or popularity badges only when the repository is public,
+the numbers are real, and the project benefits from showing them. -->
+
 <!-- Optional: back-to-top link for long READMEs -->
 <!-- <p align="right"><a href="#top">back to top</a></p> -->
 
@@ -270,3 +304,7 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 [build-url]: https://github.com/<org>/<repo>/actions
 [downloads-shield]: https://img.shields.io/npm/dm/<package-name>
 [downloads-url]: https://www.npmjs.com/package/<package-name>
+<!-- [stars-shield]: https://img.shields.io/github/stars/<org>/<repo>?style=social -->
+<!-- [stars-url]: https://github.com/<org>/<repo>/stargazers -->
+<!-- [contributors-shield]: https://img.shields.io/github/contributors/<org>/<repo>.svg -->
+<!-- [contributors-url]: https://github.com/<org>/<repo>/graphs/contributors -->
