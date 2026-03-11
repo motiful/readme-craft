@@ -83,40 +83,39 @@ Sample flow, not a transcript from a verified run:
 
 ## Install
 
-This repository is still being prepared for public publication. Until a public GitHub repo exists, register a local checkout in the agent roots you actually use.
+Install directly from the public GitHub repository:
 
 ```bash
-# Replace /path/to/readme-craft with your local checkout.
-ln -sfn /path/to/readme-craft ~/.claude/skills/readme-craft
+npx skills add motiful/readme-craft
 ```
 
 <details>
 <summary>Common skill roots</summary>
 
 ```bash
+git clone https://github.com/motiful/readme-craft ~/skills/readme-craft
+
 # Pick only the roots you actually use.
 # You do not need to register every platform.
 # If a root does not exist yet, create it only intentionally.
 
 # Claude Code
-ln -sfn /path/to/readme-craft ~/.claude/skills/readme-craft
+ln -sfn ~/skills/readme-craft ~/.claude/skills/readme-craft
 
 # Codex
-ln -sfn /path/to/readme-craft ~/.agents/skills/readme-craft
+ln -sfn ~/skills/readme-craft ~/.agents/skills/readme-craft
 
 # VS Code / GitHub Copilot
-ln -sfn /path/to/readme-craft ~/.copilot/skills/readme-craft
+ln -sfn ~/skills/readme-craft ~/.copilot/skills/readme-craft
 
 # Cursor (if your setup ignores the symlink, use a real copy instead)
-ln -sfn /path/to/readme-craft ~/.cursor/skills/readme-craft
+ln -sfn ~/skills/readme-craft ~/.cursor/skills/readme-craft
 
 # Windsurf
-ln -sfn /path/to/readme-craft ~/.codeium/windsurf/skills/readme-craft
+ln -sfn ~/skills/readme-craft ~/.codeium/windsurf/skills/readme-craft
 ```
 
 </details>
-
-Public repo-path install can replace this section after the GitHub repository is live.
 
 ---
 
