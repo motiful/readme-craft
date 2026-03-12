@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-03-12T18:52:40.738Z",
+  "count": 6,
+  "items": [
+    {
+      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-figlet-dos-rebel-inline.svg",
+      "presetKey": "figlet-dos-rebel-inline",
+      "paletteKey": "ocean",
+      "label": "DOS Rebel Inline",
+      "intent": "Softer secondary DOS Rebel variant for smaller or more product-like README headers.",
+      "engine": "figlet",
+      "family": "figlet",
+      "name": "readme-craft"
+    },
+    {
+      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-figlet-dos-rebel-main.svg",
+      "presetKey": "figlet-dos-rebel-main",
+      "paletteKey": "ocean",
+      "label": "DOS Rebel Main",
+      "intent": "Default README fallback wordmark. Dense, structured, and tool-like.",
+      "engine": "figlet",
+      "family": "figlet",
+      "name": "readme-craft"
+    },
+    {
+      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-figlet-ansi-shadow-sharp.svg",
+      "presetKey": "figlet-ansi-shadow-sharp",
+      "paletteKey": "solar-flare",
+      "label": "ANSI Shadow Sharp",
+      "intent": "Poster-like alternative with a sharper shadow split.",
+      "engine": "figlet",
+      "family": "figlet",
+      "name": "readme-craft"
+    },
+    {
+      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-cfonts-block-compact.svg",
+      "presetKey": "cfonts-block-compact",
+      "paletteKey": "ocean",
+      "label": "Block Compact",
+      "intent": "Structured and display-ready. Strongest general-purpose cfonts baseline.",
+      "engine": "cfonts",
+      "family": "cfonts",
+      "name": "readme-craft"
+    },
+    {
+      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/skill-forge-cfonts-shade-crisp.svg",
+      "presetKey": "cfonts-shade-crisp",
+      "paletteKey": "ocean",
+      "label": "Shade Crisp",
+      "intent": "Brighter and cleaner shade treatment with more snap.",
+      "engine": "cfonts",
+      "family": "cfonts",
+      "name": "skill-forge"
+    },
+    {
+      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/repo-scaffold-cfonts-tiny-tall.svg",
+      "presetKey": "cfonts-tiny-tall",
+      "paletteKey": "ocean",
+      "label": "Tiny Tall",
+      "intent": "Compact micro-display style with distinct personality.",
+      "engine": "cfonts",
+      "family": "cfonts",
+      "name": "repo-scaffold"
+    }
+  ]
+}

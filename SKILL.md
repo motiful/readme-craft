@@ -1,6 +1,6 @@
 ---
 name: readme-craft
-description: Generate and improve README files using a 3-tier layout strategy, GitHub-native formatting patterns, badge guidance, and interactive three-mode workflows.
+description: Generate and improve README files using a 3-tier layout strategy, GitHub-native formatting patterns, badge guidance, and interactive three-mode workflows. Use when the user says "write a README", "generate a README", "create a README", "improve this README", "review my README", "make my README better", "add badges", or "fix my README layout".
 license: MIT
 metadata:
   author: motiful
@@ -35,6 +35,16 @@ Activate this skill when the user says any of:
 
 Determine the mode from the user's request and available context.
 
+### Step 0: Dependency Check
+
+Before running any mode, verify the logo generation pipeline is available (needed only when the project has no existing logo):
+
+1. Check if `node` is available: `node --version` (requires Node.js 18+)
+2. Check if dependencies are installed: look for `node_modules/` in the readme-craft skill directory (`${CLAUDE_SKILL_DIR}`)
+3. If `node_modules/` is missing, run `npm install` in the skill directory
+
+If Node.js is not available, skip logo generation steps in all modes and note this to the user. The core README writing and review functionality works without Node.js — only fallback SVG wordmark generation requires it.
+
 ### Mode A: Create from Scratch
 
 **Trigger:** User describes a project that does not yet exist as code, or explicitly asks to draft a README without scanning files.
@@ -48,21 +58,29 @@ Determine the mode from the user's request and available context.
    - Key features (3-6)
    - License
 2. Ask up to 4 focused presentation questions when they materially affect the output:
-   - logo now or later
+   - preserve an existing logo or brand system strictly
    - social proof badges or widgets
    - keep everything in README vs split deep reference content to `docs/`
    - diagrams / math / footnotes only if the project genuinely benefits
 3. Select the appropriate template:
-   - `templates/universal-readme.md` for general OSS projects
-   - `templates/skill-readme.md` for AI agent skills
+   - `assets/universal-readme.md` for general OSS projects
+   - `assets/skill-readme.md` for AI agent skills
 4. Fill every `<placeholder>` in the template using the collected information.
 5. Apply the 3-Tier Layout Strategy (see below).
 6. Apply GitHub-Native Formatting Decisions (see below).
 7. Select badges using the Badge Selection guidance (see below).
 8. Include the dark/light mode logo stub if the project has a logo (see below).
-9. Remove any sections the user explicitly says are not needed.
-10. Apply Tone & Voice guidelines (see below).
-11. Run the Quality Checklist before delivering.
+9. If the project has no logo, generate logo candidates for user selection:
+   a. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <project>/assets/candidates/`
+   b. Present the absolute file paths to the user so they can preview each candidate.
+   c. Wait for the user to pick one (or ask for more candidates / a specific preset).
+   d. Copy the selected SVG to `assets/logo-light.svg` and generate the dark variant.
+   e. If the generated mark already spells the project name clearly, do not stack a second `<h1>` underneath it.
+   For preset selection rules, see `references/logo-generation.md`. For a visual gallery of all presets, see `docs/logo-gallery.md`.
+10. Remove any sections the user explicitly says are not needed.
+11. Apply Tone & Voice guidelines (see below).
+12. Run the Quality Checklist before delivering.
+13. Add the skill footer: `Crafted with [Readme Craft](https://github.com/motiful/readme-craft)`. If the README was also generated through skill-forge's pipeline, prepend `Forged with [Skill Forge](https://github.com/motiful/skill-forge) ·` before the readme-craft credit.
 
 ### Mode B: Create from Codebase
 
@@ -88,13 +106,21 @@ Determine the mode from the user's request and available context.
    - should a diagram be added
    - should an existing voice or visual style be preserved strictly
 4. Select and fill the appropriate template:
-   - `templates/universal-readme.md` for general OSS projects
-   - `templates/skill-readme.md` for AI agent skills (projects with a SKILL.md)
+   - `assets/universal-readme.md` for general OSS projects
+   - `assets/skill-readme.md` for AI agent skills (projects with a SKILL.md)
 5. Apply the 3-Tier Layout Strategy.
 6. Apply GitHub-Native Formatting Decisions (see below).
 7. Select badges based on detected ecosystem.
-8. Apply Tone & Voice guidelines (see below).
-9. Run the Quality Checklist before delivering.
+8. If the project has no logo, generate logo candidates for user selection:
+   a. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <project>/assets/candidates/`
+   b. Present the absolute file paths to the user so they can preview each candidate.
+   c. Wait for the user to pick one (or ask for more candidates / a specific preset).
+   d. Copy the selected SVG to `assets/logo-light.svg` and generate the dark variant.
+   e. If the generated mark already spells the project name clearly, do not stack a second `<h1>` underneath it.
+   For preset selection rules, see `references/logo-generation.md`. For a visual gallery of all presets, see `docs/logo-gallery.md`.
+9. Apply Tone & Voice guidelines (see below).
+10. Run the Quality Checklist before delivering.
+11. Add the skill footer: `Crafted with [Readme Craft](https://github.com/motiful/readme-craft)`. If the README was also generated through skill-forge's pipeline, prepend `Forged with [Skill Forge](https://github.com/motiful/skill-forge) ·` before the readme-craft credit.
 
 ### Mode C: Improve Existing README
 
@@ -127,8 +153,7 @@ Determine the mode from the user's request and available context.
 
 This is the primary differentiator of readme-craft. Every README must organize content into three tiers based on how visitors consume information.
 
-> [!NOTE]
-> This strategy is optimized for **GitHub** README rendering. Elements like `<picture>`, `<details>`, and GitHub Alerts may not render on other platforms (GitLab, npm, crates.io). Adapt as needed.
+This strategy is optimized for **GitHub** README rendering. Elements like `<picture>`, `<details>`, and similar GitHub-specific patterns may not render on other platforms (GitLab, npm, crates.io). Adapt as needed.
 
 ### Tier 1: Above the Fold (~250px)
 
@@ -194,10 +219,8 @@ The next 2-3 screens. A visitor who passed Tier 1 wants to evaluate whether this
 - Use code blocks aggressively — they scan faster than prose.
 - Bullet lists over paragraphs.
 - If a section exceeds one screen, move detail into a linked doc or collapsible block.
-- Use GitHub Alerts (`> [!NOTE]`, `> [!WARNING]`) for important callouts.
 
-> [!NOTE]
-> For AI agent skills, "Usage" (trigger phrases) may come before "Install" to prioritize understanding over commitment. The skill template reflects this ordering.
+For AI agent skills, "Usage" (trigger phrases) may come before "Install" to prioritize understanding over commitment. The skill template reflects this ordering.
 
 ### Tier 3: Reference (Collapsible)
 
@@ -277,8 +300,18 @@ GitHub supports theme-aware images via the `<picture>` element. Always include t
 - Prefer SVG for logos (scales cleanly, small file size).
 - The `<img>` fallback uses the light variant (GitHub default theme).
 - If the project only has one logo, use the same path for both `srcset` values and the `src` — still include the `<picture>` wrapper so a dark variant can be added later without restructuring.
-- Width 80-120px for inline logos. Never use full-width banners in Tier 1.
+- Width 80-120px for inline logos (icon/symbol marks). Wordmark logos (text-rendered SVGs like figlet/cfonts output) may use 400-500px width since they serve as both logo and project name. Never use full-width banners in Tier 1.
 - If no logo exists, omit the `<picture>` block entirely. Do NOT use a placeholder image.
+
+**Fallback wordmarks:**
+
+- If the project has no logo, generate logo candidates using `--candidates N` mode instead of silently picking one preset.
+- Present absolute file paths to the user for preview. Let them choose.
+- Use `--random` mode only when the user explicitly says "surprise me" or "just pick one".
+- For a visual gallery of all available presets and palettes, see `docs/logo-gallery.md`.
+- Prefer visually single-line wordmarks for README headers. If a preset reads like stacked block art or creates a double-title feel, switch to an inline treatment.
+- If the generated wordmark already renders the project name clearly, omit the duplicated `<h1>` by default unless the user explicitly wants both.
+- For preset selection rules and examples, see `references/logo-generation.md` and `references/logo-examples.md`.
 
 ---
 
@@ -292,7 +325,6 @@ For syntax patterns and deeper rules, see `references/github-formatting.md`.
 
 - Relative links for `docs/`, sibling markdown files, and split reference material
 - `<details><summary>` for Tier 3 or overflow content
-- GitHub Alerts for high-value notes, tips, and warnings
 - Tables for structured data
 - Minimal HTML where Markdown is not enough
 
@@ -324,8 +356,7 @@ When writing README content, follow these guidelines:
 - **Professional but direct** — no exclamation marks, no emoji, no hype words ("revolutionary", "blazing fast").
 - **Concise** — if a sentence doesn't add information, cut it.
 
-> [!NOTE]
-> In Mode C (Improve), these guidelines are recommendations, not overrides. Preserve the author's existing voice unless they explicitly ask for a tone change.
+In Mode C (Improve), these guidelines are recommendations, not overrides. Preserve the author's existing voice unless they explicitly ask for a tone change.
 
 ---
 
@@ -365,10 +396,11 @@ Run this checklist before delivering any README. Report failures to the user.
 ### Formatting
 
 - [ ] Logo uses `<picture>` element (if logo exists)
+- [ ] Generated wordmarks read as one dominant header line; avoid stacking the project name twice unless the user asks for it
 - [ ] Badges are on 1-2 lines, max 6 badges
 - [ ] Badge URLs use reference-style links at bottom of file
 - [ ] Code blocks specify the language for syntax highlighting
-- [ ] GitHub Alerts (`> [!NOTE]`, etc.) are used instead of bold/italic for callouts
+- [ ] Any callouts are genuinely necessary, not decorative formatting
 - [ ] No broken internal links (anchor links match actual heading slugs)
 - [ ] Tables are used for structured data (config options, prerequisites)
 - [ ] Mermaid / math / footnotes are used only when they communicate faster than prose
@@ -379,6 +411,7 @@ Run this checklist before delivering any README. Report failures to the user.
 - [ ] Contributing info exists (inline or linked CONTRIBUTING.md)
 - [ ] Install, docs, and release links resolve or are clearly marked as pending
 - [ ] At least one usage example beyond Quick Start
+- [ ] Skill footer is present: `Crafted with [Readme Craft](...)` (prepend `Forged with [Skill Forge](...) ·` if generated through skill-forge's pipeline)
 
 ---
 
@@ -388,9 +421,12 @@ This skill uses the following template and analysis files:
 
 | File | Purpose |
 |------|---------|
-| `templates/universal-readme.md` | Base template for any OSS project. Contains all three tiers with placeholder markup. |
-| `templates/skill-readme.md` | Extended template for AI agent skills. Adds Agent Skills badge, trigger phrases, `npx skills add` install, and "What's Inside" section. |
+| `assets/universal-readme.md` | Base template for any OSS project. Contains all three tiers with placeholder markup. |
+| `assets/skill-readme.md` | Extended template for AI agent skills. Adds Agent Skills badge, trigger phrases, `npx skills add` install, and "What's Inside" section. |
 | `references/badges.md` | Copy-paste badge patterns for shields.io, organized by category (license, version, CI, downloads, coverage, platform, Agent Skills). |
 | `references/github-formatting.md` | GitHub-native formatting patterns, overflow strategy, and rules for diagrams, footnotes, math, task lists, and social proof. |
+| `references/logo-generation.md` | README fallback logo guidance: positioning, preset selection, runtime requirements, and when to use the local wordmark generator. |
+| `references/logo-examples.md` | Short example mappings from project feel to recommended logo presets. |
+| `docs/logo-gallery.md` | Visual gallery of all logo presets with rendered SVG previews, palette table, and selection guidance. |
 
-When generating a README, always start from the appropriate template file. Read it, fill its placeholders, then adjust sections based on the project's needs.
+When generating a README, always start from the appropriate asset template file. Read it, fill its placeholders, then adjust sections based on the project's needs.

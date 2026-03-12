@@ -17,6 +17,7 @@
     <img alt="<skill-name>" src="<assets/logo-light.svg>" width="120">
   </picture>
 
+  <!-- If a generated wordmark already spells the project name clearly, prefer a visually single-line Tier 1 and omit the separate <h1> instead of stacking the name twice. -->
   <h1><skill-name></h1>
   <p><one-line value proposition — what problem this solves, not what it is></p>
 </div>
@@ -44,8 +45,7 @@
 
 <br>
 
-> [!NOTE]
-> [Agent Skills](https://agentskills.io) compatible — works with Claude Code, Codex, Cursor, Windsurf, GitHub Copilot, and other Agent Skills adopters.
+[Agent Skills](https://agentskills.io) compatible — works with Claude Code, Codex, Cursor, Windsurf, GitHub Copilot, and other Agent Skills adopters.
 
 ---
 
@@ -206,7 +206,7 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 
 ---
 
-Forged with [Skill Forge](https://github.com/<org>/skill-forge)
+Crafted with [Readme Craft](https://github.com/motiful/readme-craft)
 
 <!-- Reference-style link definitions -->
 [license-shield]: https://img.shields.io/badge/License-<license>-<color>.svg

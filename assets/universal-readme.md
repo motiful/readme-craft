@@ -19,6 +19,7 @@
     <img alt="<project-name>" src="<assets/logo-light.svg>" width="120">
   </picture>
 
+  <!-- If a generated wordmark already spells the project name clearly, prefer a visually single-line Tier 1 and omit the separate <h1> instead of stacking the name twice. -->
   <h1><project-name></h1>
   <p><one-line description — what it does and why it matters></p>
 </div>
@@ -108,8 +109,7 @@ yarn add <package-name>
 pnpm add <package-name>
 ```
 
-> [!NOTE]
-> Requires <runtime> <version>+. See [Prerequisites](#prerequisites) for details.
+Requires <runtime> <version>+. See [Prerequisites](#prerequisites) for details.
 
 <details>
 <summary>Other installation methods</summary>
@@ -294,6 +294,8 @@ the numbers are real, and the project benefits from showing them. -->
 <!-- <p align="right"><a href="#top">back to top</a></p> -->
 
 ---
+
+Crafted with [Readme Craft](https://github.com/motiful/readme-craft)
 
 <!-- Reference-style link definitions (keeps source markdown clean) -->
 [license-shield]: https://img.shields.io/github/license/<org>/<repo>.svg

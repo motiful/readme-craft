@@ -2,3 +2,6 @@
 .claude/analysis/
 .claude/community-skills/
 .claude/progress.md
+node_modules/
+output/
+.claude/examples/

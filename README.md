@@ -1,7 +1,10 @@
 <div align="center">
 
-  <h1>readme-craft</h1>
-  <p>Stop writing READMEs from scratch — or struggling with ones nobody reads.</p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="examples/logos/readme-craft-figlet-dos-rebel-inline.svg">
+    <source media="(prefers-color-scheme: light)" srcset="examples/logos/readme-craft-figlet-dos-rebel-inline.svg">
+    <img alt="readme-craft" src="examples/logos/readme-craft-figlet-dos-rebel-inline.svg" width="440">
+  </picture>
 
 </div>
 
@@ -19,10 +22,9 @@
   <a href="#install">Install</a>
 </div>
 
-<br>
+> Layout-first README generation — organize by how readers scan, not by what you want to say.
 
-> [!NOTE]
-> [Agent Skills](https://agentskills.io) compatible — works with Claude Code, Codex, Cursor, Windsurf, GitHub Copilot, and other Agent Skills adopters.
+[Agent Skills](https://agentskills.io) compatible — works with Claude Code, Codex, Cursor, Windsurf, GitHub Copilot, and other Agent Skills adopters.
 
 ---
 
@@ -44,12 +46,10 @@ readme-craft focuses on the final reading experience: a **3-tier layout strategy
 
 - **Three operation modes** — create from scratch, generate from codebase, or improve an existing README
 - **3-tier layout strategy** — information hierarchy based on how visitors actually consume READMEs
-- **Dark/light mode logos** — `<picture>` element pattern for GitHub theme switching
-- **GitHub-native formatting** — `<details>`, alerts, relative links, Mermaid, math, footnotes, and minimal HTML when they improve clarity
-- **Badge selection** — priority-ordered guidance (license → version → CI → downloads → coverage)
-- **Interactive collaboration** — asks before adding logos, social proof, docs splits, or more opinionated formatting
-- **Quality checklist** — validation across structure, content, formatting, and completeness
-- **Two templates** — universal OSS project + AI agent skill
+- **GitHub-native formatting and badge guidance** — `<details>`, relative links, tables, and trust signals that improve scan speed
+- **Logo handling** — preserve existing brand assets or generate a README-safe fallback SVG wordmark
+- **Interactive improvement flow** — asks before social proof, docs splits, or stricter visual choices when those tradeoffs matter
+- **Quality checklist and templates** — reusable review criteria plus dedicated layouts for OSS repos and AI agent skills
 
 ## Usage
 
@@ -80,6 +80,22 @@ Sample flow, not a transcript from a verified run:
 - Tier 1 keeps the value proposition, trust badges, and quick links visible immediately.
 - Tier 2 keeps problem, features, usage, and install sections short enough to scan without hunting.
 - Tier 3 folds structure, configuration, roadmap, and contribution details into reference sections.
+
+### Case Study: Skill Forge
+
+<img src="examples/skill-forge-comparison.png" alt="Skill Forge README before and after" width="960">
+
+The left pane shows the original README — plain text, no visual hierarchy. The right pane shows the readme-craft output — logo, badges, quick links, and a clear 3-tier structure. Full case study: [`.claude/examples/skill-forge-before-after.md`](.claude/examples/skill-forge-before-after.md)
+
+## Prerequisites
+
+The main README writing and review flow does not require repo-local dependencies. The only local runtime path is fallback logo generation.
+
+- Node.js 18+ with `npm` — required only when generating a fallback SVG wordmark with the local helper
+- Run `npm install` in the `readme-craft` root before using the logo generator
+- If the project already has a logo, you can skip this step
+
+The logo generator (`scripts/generate-logo.mjs`) runs locally, reads no external data, and requires no special permissions. It uses `figlet` and `cfonts` npm packages to render text into SVG files.
 
 ## Install
 
@@ -154,13 +170,21 @@ readme-craft treats GitHub formatting as part of the README architecture, not as
 
 ```text
 readme-craft/
-├── SKILL.md                                # Skill definition — modes, tiers, checklist
-├── templates/
-│   ├── universal-readme.md                 # Template for any OSS project
+├── SKILL.md                                # Skill definition — modes, tiers, and checklist
+├── assets/
+│   ├── universal-readme.md                 # Template for general OSS projects
 │   └── skill-readme.md                     # Template for AI agent skills
-└── references/
-    ├── badges.md                           # Copy-paste badge patterns by ecosystem
-    └── github-formatting.md                # GitHub-native formatting decisions and overflow strategy
+├── references/
+│   ├── badges.md                           # Copy-paste badge patterns by ecosystem
+│   ├── github-formatting.md                # GitHub-native formatting and overflow strategy
+│   ├── logo-generation.md                  # Fallback logo rules, presets, and runtime requirements
+│   ├── logo-examples.md                    # Example mappings from project feel to logo preset
+│   └── comparison-screenshots.md           # Before/after comparison PNG generation
+└── scripts/
+    ├── generate-logo.mjs                   # Local helper for fallback README wordmarks
+    ├── generate-comparison.mjs             # CLI for before/after comparison PNGs
+    ├── logo/                               # Logo engine modules (figlet, cfonts, SVG)
+    └── comparison/                         # Comparison rendering and screenshot modules
 ```
 
 </details>
@@ -175,7 +199,7 @@ MIT — See [LICENSE](LICENSE) for details.
 
 ---
 
-Forged with [Skill Forge](https://github.com/motiful/skill-forge)
+Forged with [Skill Forge](https://github.com/motiful/skill-forge) · Crafted with [Readme Craft](https://github.com/motiful/readme-craft)
 
 <!-- Reference-style link definitions -->
 [license-shield]: https://img.shields.io/badge/License-MIT-green.svg

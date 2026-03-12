@@ -6,7 +6,6 @@ Use GitHub formatting features deliberately. The goal is clarity, not decoration
 
 - Relative links for docs split across `README.md`, `docs/`, and sibling markdown files
 - `<details><summary>` for Tier 3 reference material
-- GitHub Alerts for critical notes, warnings, or tips
 - Tables for structured data such as config, prerequisites, and compatibility
 - `<picture>` for dark/light mode logos
 
@@ -77,7 +76,6 @@ When the README becomes too long:
 This reference assumes current GitHub support for:
 
 - basic Markdown and relative links
-- alerts
 - collapsed sections
 - Mermaid and other diagram syntaxes
 - math expressions
