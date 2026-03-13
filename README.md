@@ -1,9 +1,9 @@
 <div align="center">
 
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="examples/logos/readme-craft-figlet-dos-rebel-inline.svg">
-    <source media="(prefers-color-scheme: light)" srcset="examples/logos/readme-craft-figlet-dos-rebel-inline.svg">
-    <img alt="readme-craft" src="examples/logos/readme-craft-figlet-dos-rebel-inline.svg" width="440">
+    <source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="logo-light.svg">
+    <img alt="readme-craft" src="logo-light.svg" width="440">
   </picture>
 
 </div>
@@ -83,7 +83,7 @@ Sample flow, not a transcript from a verified run:
 
 ### Case Study: Skill Forge
 
-<img src="examples/skill-forge-comparison.png" alt="Skill Forge README before and after" width="960">
+<img src="docs/skill-forge-comparison.png" alt="Skill Forge README before and after" width="960">
 
 The left pane shows the original README — plain text, no visual hierarchy. The right pane shows the readme-craft output — logo, badges, quick links, and a clear 3-tier structure. Full case study: [`.claude/examples/skill-forge-before-after.md`](.claude/examples/skill-forge-before-after.md)
 

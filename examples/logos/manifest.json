@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-03-12T18:52:40.738Z",
-  "count": 6,
+  "generatedAt": "2026-03-12T20:49:32.608Z",
+  "count": 9,
   "items": [
     {
       "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-figlet-dos-rebel-inline.svg",
@@ -15,7 +15,7 @@
     {
       "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-figlet-dos-rebel-main.svg",
       "presetKey": "figlet-dos-rebel-main",
-      "paletteKey": "ocean",
+      "paletteKey": "solar-flare",
       "label": "DOS Rebel Main",
       "intent": "Default README fallback wordmark. Dense, structured, and tool-like.",
       "engine": "figlet",
@@ -25,7 +25,7 @@
     {
       "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-figlet-ansi-shadow-sharp.svg",
       "presetKey": "figlet-ansi-shadow-sharp",
-      "paletteKey": "solar-flare",
+      "paletteKey": "synthwave",
       "label": "ANSI Shadow Sharp",
       "intent": "Poster-like alternative with a sharper shadow split.",
       "engine": "figlet",
@@ -35,7 +35,7 @@
     {
       "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-cfonts-block-compact.svg",
       "presetKey": "cfonts-block-compact",
-      "paletteKey": "ocean",
+      "paletteKey": "arctic",
       "label": "Block Compact",
       "intent": "Structured and display-ready. Strongest general-purpose cfonts baseline.",
       "engine": "cfonts",
@@ -45,7 +45,7 @@
     {
       "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/skill-forge-cfonts-shade-crisp.svg",
       "presetKey": "cfonts-shade-crisp",
-      "paletteKey": "ocean",
+      "paletteKey": "voltage",
       "label": "Shade Crisp",
       "intent": "Brighter and cleaner shade treatment with more snap.",
       "engine": "cfonts",
@@ -55,12 +55,42 @@
     {
       "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/repo-scaffold-cfonts-tiny-tall.svg",
       "presetKey": "cfonts-tiny-tall",
-      "paletteKey": "ocean",
+      "paletteKey": "plasma",
       "label": "Tiny Tall",
       "intent": "Compact micro-display style with distinct personality.",
       "engine": "cfonts",
       "family": "cfonts",
       "name": "repo-scaffold"
+    },
+    {
+      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-cfonts-simpleblock-slim.svg",
+      "presetKey": "cfonts-simpleblock-slim",
+      "paletteKey": "ultraviolet",
+      "label": "SimpleBlock Slim",
+      "intent": "Slimmer block texture when the main block preset feels too heavy.",
+      "engine": "cfonts",
+      "family": "cfonts",
+      "name": "readme-craft"
+    },
+    {
+      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-cfonts-shade-default.svg",
+      "presetKey": "cfonts-shade-default",
+      "paletteKey": "forest",
+      "label": "Shade Default",
+      "intent": "Soft metallic texture with readable structure.",
+      "engine": "cfonts",
+      "family": "cfonts",
+      "name": "readme-craft"
+    },
+    {
+      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-cfonts-console-neutral.svg",
+      "presetKey": "cfonts-console-neutral",
+      "paletteKey": "midnight",
+      "label": "Console Neutral",
+      "intent": "Quiet and minimal. Useful as a neutral fallback or control.",
+      "engine": "cfonts",
+      "family": "cfonts",
+      "name": "readme-craft"
     }
   ]
 }

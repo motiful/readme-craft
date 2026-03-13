@@ -4,6 +4,7 @@ export const CFONTS_GUARDRAILS = {
   maxSvgWidth: 900,
   maxSvgHeight: 300,
   maxAspectRatio: 10,
+  minDisplayHeight: 40,
 };
 
 export function gradientEndpoints(direction, pad, contentW, contentH) {

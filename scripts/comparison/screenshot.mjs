@@ -24,7 +24,7 @@ export async function screenshotPage(htmlContent, opts = {}) {
   try {
     const browser = await chromium.launch();
     const context = await browser.newContext({
-      viewport: { width, height: 800 },
+      viewport: { width, height: cropHeight ?? 800 },
       deviceScaleFactor,
     });
     const page = await context.newPage();

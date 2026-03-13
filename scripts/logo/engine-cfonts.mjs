@@ -63,7 +63,9 @@ export function renderCfontsLines(text, font, rootDir) {
     .replace(/\r/g, '')
     .replace(/^<div[^>]*>/, '')
     .replace(/<\/div>\s*$/, '')
-    .replace(/<br>\n?/g, '\n');
+    .replace(/<br>\n?/g, '\n')
+    .replace(/<span[^>]*>/g, '')
+    .replace(/<\/span>/g, '');
 
   const lines = cleaned.split('\n');
   while (lines.length && !lines[0].trim()) lines.shift();
@@ -241,14 +243,15 @@ function renderTextSvg(lines, preset, paletteKey) {
     return `<text x="${x}" y="${y}" xml:space="preserve">${line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</text>`;
   }).join('\n    ');
 
-  // Apply size guardrails
-  const { maxSvgWidth, maxSvgHeight, maxAspectRatio } = CFONTS_GUARDRAILS;
-  let scale = 1;
-  if (svgW > maxSvgWidth) scale = Math.min(scale, maxSvgWidth / svgW);
-  if (svgH > maxSvgHeight) scale = Math.min(scale, maxSvgHeight / svgH);
-  if (svgW / svgH > maxAspectRatio) scale = Math.min(scale, (maxAspectRatio * svgH) / svgW);
-  const sizeAttrs = scale < 1
-    ? ` width="${Math.round(svgW * scale)}" height="${Math.round(svgH * scale)}"`
+  // Apply size guardrails — only constrain width, let viewBox determine height
+  const { maxSvgWidth, minDisplayHeight } = CFONTS_GUARDRAILS;
+  let displayWidth = Math.min(svgW, maxSvgWidth);
+  const proportionalHeight = displayWidth * svgH / svgW;
+  if (proportionalHeight < minDisplayHeight) {
+    displayWidth = Math.ceil(minDisplayHeight * svgW / svgH);
+  }
+  const sizeAttrs = displayWidth < svgW
+    ? ` width="${displayWidth}"`
     : '';
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -287,14 +290,15 @@ export function generateCfontsSvg(lines, preset, paletteKey) {
   const shadow = renderGrid(lines, preset.cellW, preset.cellH, preset.pad, 'gs', preset.shadowOffset);
   const main = renderGrid(lines, preset.cellW, preset.cellH, preset.pad, 'g', 0);
 
-  // Apply size guardrails
-  const { maxSvgWidth, maxSvgHeight, maxAspectRatio } = CFONTS_GUARDRAILS;
-  let scale = 1;
-  if (svgW > maxSvgWidth) scale = Math.min(scale, maxSvgWidth / svgW);
-  if (svgH > maxSvgHeight) scale = Math.min(scale, maxSvgHeight / svgH);
-  if (svgW / svgH > maxAspectRatio) scale = Math.min(scale, (maxAspectRatio * svgH) / svgW);
-  const sizeAttrs = scale < 1
-    ? ` width="${Math.round(svgW * scale)}" height="${Math.round(svgH * scale)}"`
+  // Apply size guardrails — only constrain width, let viewBox determine height
+  const { maxSvgWidth, minDisplayHeight } = CFONTS_GUARDRAILS;
+  let displayWidth = Math.min(svgW, maxSvgWidth);
+  const proportionalHeight = displayWidth * svgH / svgW;
+  if (proportionalHeight < minDisplayHeight) {
+    displayWidth = Math.ceil(minDisplayHeight * svgW / svgH);
+  }
+  const sizeAttrs = displayWidth < svgW
+    ? ` width="${displayWidth}"`
     : '';
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -314,5 +318,12 @@ export function generateCfontsSvg(lines, preset, paletteKey) {
 }
 
 export function buildCfontsText(name) {
-  return name.toUpperCase();
+  const upper = name.toUpperCase();
+  // Split on hyphens/spaces so cfonts renders multi-line (| = line break).
+  // This avoids extreme aspect ratios for long compound names.
+  const words = upper.split(/[-\s]+/);
+  if (words.length > 1) {
+    return words.join('|');
+  }
+  return upper;
 }

@@ -144,28 +144,29 @@ async function main() {
     const count = parseInt(args.candidates, 10);
     if (!count || count < 1) throw new Error('--candidates requires a positive integer.');
 
-    // Build candidate pool: all presets × all palettes, shuffled
+    // Diverse selection: one candidate per preset first, then fill remaining slots
     const allPresets = Object.keys(PRESETS);
     const paletteKeys = Object.keys(PALETTES);
-    const pool = [];
-    for (const p of allPresets) {
-      for (const pal of paletteKeys) {
-        pool.push({ preset: p, palette: pal });
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+    // Phase 1: one candidate per reliable preset (random palette each)
+    const shuffledReliable = [...RELIABLE_POOL].sort(() => Math.random() - 0.5);
+    const selected = shuffledReliable.slice(0, count).map(preset => ({
+      preset, palette: pick(paletteKeys),
+    }));
+
+    // Phase 2: fill remaining with random non-reliable presets, then extra reliable
+    if (selected.length < count) {
+      const nonReliable = allPresets.filter(p => !RELIABLE_POOL.includes(p)).sort(() => Math.random() - 0.5);
+      for (const preset of nonReliable) {
+        if (selected.length >= count) break;
+        selected.push({ preset, palette: pick(paletteKeys) });
       }
     }
-    // Fisher-Yates shuffle
-    for (let i = pool.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
+    // Phase 3: if still need more, add extra reliable with different palettes
+    while (selected.length < count) {
+      selected.push({ preset: pick(RELIABLE_POOL), palette: pick(paletteKeys) });
     }
-    // Prioritize RELIABLE_POOL presets first
-    pool.sort((a, b) => {
-      const aReliable = RELIABLE_POOL.includes(a.preset) ? 0 : 1;
-      const bReliable = RELIABLE_POOL.includes(b.preset) ? 0 : 1;
-      return aReliable - bReliable;
-    });
-
-    const selected = pool.slice(0, count);
     const candidateDir = outDir;
     rmSync(candidateDir, { recursive: true, force: true });
     mkdirSync(candidateDir, { recursive: true });

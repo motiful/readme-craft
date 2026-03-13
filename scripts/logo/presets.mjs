@@ -150,12 +150,17 @@ export const BASELINE_PACK = [
 ];
 
 export const EXAMPLE_JOBS = [
+  // figlet presets
   { name: 'readme-craft', preset: 'figlet-dos-rebel-inline', palette: 'ocean' },
-  { name: 'readme-craft', preset: 'figlet-dos-rebel-main' },
-  { name: 'readme-craft', preset: 'figlet-ansi-shadow-sharp' },
-  { name: 'readme-craft', preset: 'cfonts-block-compact' },
-  { name: 'skill-forge', preset: 'cfonts-shade-crisp' },
-  { name: 'repo-scaffold', preset: 'cfonts-tiny-tall' },
+  { name: 'readme-craft', preset: 'figlet-dos-rebel-main', palette: 'solar-flare' },
+  { name: 'readme-craft', preset: 'figlet-ansi-shadow-sharp', palette: 'synthwave' },
+  // cfonts presets — each preset once, different names + palettes
+  { name: 'readme-craft', preset: 'cfonts-block-compact', palette: 'arctic' },
+  { name: 'skill-forge', preset: 'cfonts-shade-crisp', palette: 'voltage' },
+  { name: 'repo-scaffold', preset: 'cfonts-tiny-tall', palette: 'plasma' },
+  { name: 'readme-craft', preset: 'cfonts-simpleblock-slim', palette: 'ultraviolet' },
+  { name: 'readme-craft', preset: 'cfonts-shade-default', palette: 'forest' },
+  { name: 'readme-craft', preset: 'cfonts-console-neutral', palette: 'midnight' },
 ];
 
 export const HEADER_STYLE_PRESETS = {
@@ -168,6 +173,9 @@ export const RELIABLE_POOL = [
   'figlet-dos-rebel-main',
   'figlet-dos-rebel-inline',
   'figlet-ansi-shadow-sharp',
+  'cfonts-block-compact',
+  'cfonts-shade-crisp',
+  'cfonts-tiny-tall',
 ];
 
 export function resolvePresetChoice(presetKey, headerStyle) {

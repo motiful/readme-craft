@@ -71,10 +71,10 @@ If Node.js is not available, skip logo generation steps in all modes and note th
 7. Select badges using the Badge Selection guidance (see below).
 8. Include the dark/light mode logo stub if the project has a logo (see below).
 9. If the project has no logo, generate logo candidates for user selection:
-   a. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <project>/assets/candidates/`
+   a. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <tmpdir>/logo-candidates/`
    b. Present the absolute file paths to the user so they can preview each candidate.
    c. Wait for the user to pick one (or ask for more candidates / a specific preset).
-   d. Copy the selected SVG to `assets/logo-light.svg` and generate the dark variant.
+   d. Copy the selected SVG to `logo-light.svg` and generate the dark variant.
    e. If the generated mark already spells the project name clearly, do not stack a second `<h1>` underneath it.
    For preset selection rules, see `references/logo-generation.md`. For a visual gallery of all presets, see `docs/logo-gallery.md`.
 10. Remove any sections the user explicitly says are not needed.
@@ -112,10 +112,10 @@ If Node.js is not available, skip logo generation steps in all modes and note th
 6. Apply GitHub-Native Formatting Decisions (see below).
 7. Select badges based on detected ecosystem.
 8. If the project has no logo, generate logo candidates for user selection:
-   a. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <project>/assets/candidates/`
+   a. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <tmpdir>/logo-candidates/`
    b. Present the absolute file paths to the user so they can preview each candidate.
    c. Wait for the user to pick one (or ask for more candidates / a specific preset).
-   d. Copy the selected SVG to `assets/logo-light.svg` and generate the dark variant.
+   d. Copy the selected SVG to `logo-light.svg` and generate the dark variant.
    e. If the generated mark already spells the project name clearly, do not stack a second `<h1>` underneath it.
    For preset selection rules, see `references/logo-generation.md`. For a visual gallery of all presets, see `docs/logo-gallery.md`.
 9. Apply Tone & Voice guidelines (see below).
@@ -178,9 +178,9 @@ The first screen a visitor sees. This is the 3-second pitch. Visitors who are no
 ```html
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/logo-light.svg">
-    <img alt="project-name" src="assets/logo-light.svg" width="120">
+    <source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="logo-light.svg">
+    <img alt="project-name" src="logo-light.svg" width="120">
   </picture>
 
   <h1>project-name</h1>
@@ -205,6 +205,8 @@ The first screen a visitor sees. This is the 3-second pitch. Visitors who are no
 ### Tier 2: Scan Quickly
 
 The next 2-3 screens. A visitor who passed Tier 1 wants to evaluate whether this project is worth adopting.
+
+**Optional: Showcase Image** — For tools that produce visual transformations, place a before/after or hero image immediately after Tier 1's `---` separator, before the first `##` heading (or as the first element of Tier 2). This is a "show don't tell" proof that's more convincing than any text description. Not applicable to CLI tools, libraries, or other projects without visual output.
 
 **Required sections (in order):**
 
@@ -290,9 +292,9 @@ GitHub supports theme-aware images via the `<picture>` element. Always include t
 
 ```html
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/logo-light.svg">
-  <img alt="project-name" src="assets/logo-light.svg" width="120">
+  <source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="logo-light.svg">
+  <img alt="project-name" src="logo-light.svg" width="120">
 </picture>
 ```
 
@@ -397,6 +399,7 @@ Run this checklist before delivering any README. Report failures to the user.
 
 - [ ] Logo uses `<picture>` element (if logo exists)
 - [ ] Generated wordmarks read as one dominant header line; avoid stacking the project name twice unless the user asks for it
+- [ ] Showcase image (if applicable) is placed between Tier 1 and the first Tier 2 heading
 - [ ] Badges are on 1-2 lines, max 6 badges
 - [ ] Badge URLs use reference-style links at bottom of file
 - [ ] Code blocks specify the language for syntax highlighting

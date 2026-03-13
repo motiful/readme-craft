@@ -46,7 +46,7 @@ npm run logo:generate -- --name "readme-craft" --preset cfonts-block-compact
 npm run logo:examples
 npm run logo:random -- --name "my-project"
 npm run logo:candidates -- --name "my-project" --candidates 5
-npm run logo:candidates -- --name "my-project" --candidates 5 --out-dir my-project/assets/candidates/
+npm run logo:candidates -- --name "my-project" --candidates 5 --dual
 ```
 
 ## Requirements
@@ -121,11 +121,10 @@ For a visual gallery with rendered previews, see `docs/logo-gallery.md`.
 
 cfonts presets have automatic size constraints applied:
 - Max SVG width: 900px
-- Max SVG height: 300px
-- Max aspect ratio: 10:1
+- Min display height: 40px (prevents microscopic rendering for wide outputs)
+- Compound names (hyphenated/spaced) auto-split into multi-line for better aspect ratios
 
-If the raw output exceeds these limits, the SVG is scaled down proportionally.
-Long project names may produce degraded results with cfonts presets — prefer figlet for names > 12 characters.
+Only the `width` attribute is set on the SVG — height is derived from the viewBox, so browsers render at the correct proportional size.
 
 ## Selection Logic
 
@@ -140,8 +139,8 @@ When the user does not provide an existing logo:
 
 After the user selects a logo candidate:
 
-1. Copy the selected SVG to the final destination (e.g., `assets/logo-light.svg`, `assets/logo-dark.svg`).
-2. Delete the entire candidates directory. The project should only contain the final selected logo, not the full candidate set.
+1. Copy the selected light/dark SVGs to the project root as `logo-light.svg` and `logo-dark.svg`.
+2. Delete the entire candidates directory (use a temp dir like `/tmp/` for candidates — never generate into the project tree).
 
 Do not leave candidate files in the published artifact. The selection process is transient — only the result matters.
 

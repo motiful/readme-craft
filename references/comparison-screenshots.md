@@ -39,21 +39,29 @@ npm run comparison:generate -- --before <path> --after <path> --output <path>
 
 ## Recommended Usage
 
-**Above-fold crop** — most impactful for showcasing layout improvements:
+**Above-fold crop (default for README embeds):**
 
 ```bash
 node scripts/generate-comparison.mjs \
   --before original.md --after improved.md \
-  --output comparison-fold.png --crop 800
+  --output docs/<project>-comparison.png --crop 1800
 ```
 
-**Full-page stacked** — when the whole README changed significantly:
+**Full-page stacked** — for case study documents, not README embeds:
 
 ```bash
 node scripts/generate-comparison.mjs \
   --before original.md --after improved.md \
-  --output comparison-full.png --mode stacked
+  --output docs/<project>-comparison-full.png --mode stacked
 ```
+
+## File Naming & Placement
+
+- **Output to `docs/`**, not `examples/` (comparison images support documentation, not showcase).
+- **Use descriptive names**: `skill-forge-comparison.png`, not `comparison-crop-1800.png`.
+- **Crop 1800px** is the default for README-embedded comparisons — large enough to show meaningful content without dominating the page.
+- **Never commit intermediate crops** (e.g., crop-1200, crop-1600). Generate the final size directly.
+- **One comparison image per case study**. If the README references it, it lives in `docs/` alongside its case study markdown.
 
 ## Architecture
 
