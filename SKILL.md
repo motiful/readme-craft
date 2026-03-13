@@ -159,7 +159,7 @@ This strategy is optimized for **GitHub** README rendering. Elements like `<pict
 
 The first screen a visitor sees. This is the 3-second pitch. Visitors who are not interested will leave after this.
 
-**Required elements (in order):**
+**Baseline elements (in order):**
 
 1. **Logo** (if exists) — centered, 80-120px height. Use `<picture>` for dark/light mode (see below). Omit if the project has no logo — do not use placeholders.
 2. **Project name** — `<h1>`, centered.
@@ -167,13 +167,16 @@ The first screen a visitor sees. This is the 3-second pitch. Visitors who are no
 4. **Badges** — up to 6, on 1-2 lines. Trust signals: license, version, build status, downloads. Fewer is fine when fewer apply.
 5. **Quick action links** — inline links to the most relevant next actions (for example Quick Start, Usage, Install, Docs, Demo, Report Bug).
 
+Additional brief elements (a platform compatibility line, a short tagline, a small demo gif) are fine as long as Tier 1 stays within ~250px and reads as a single visual block.
+
 **Rules:**
+- The constraint is **height and density**, not element count. Stay within ~250px.
 - No walls of text above the fold.
 - Logo must be compact (not a full-width banner).
 - The one-liner must answer "why should I care?" not "what technology is this?"
 - No installation instructions in Tier 1.
 
-**Markdown pattern:**
+**Markdown pattern (standard):**
 
 ```html
 <div align="center">
@@ -202,6 +205,26 @@ The first screen a visitor sees. This is the 3-second pitch. Visitors who are no
 </div>
 ```
 
+**Alternate pattern (wordmark logos):**
+
+When a wide wordmark (400-500px) serves as both logo and project name, the standard `<p>` inside `<div>` can feel cramped. Use a `>` blockquote after the closing `</div>` instead — it adds visual separation between the wordmark and the one-liner.
+
+```html
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="logo-light.svg">
+    <img alt="project-name" src="logo-light.svg" width="440">
+  </picture>
+</div>
+
+<!-- badges and quick links divs here -->
+
+> One-liner value proposition
+```
+
+Use the standard `<p>` pattern by default. Switch to blockquote only when the wordmark is wide enough to make the centered `<p>` feel visually crowded.
+
 ### Tier 2: Scan Quickly
 
 The next 2-3 screens. A visitor who passed Tier 1 wants to evaluate whether this project is worth adopting.
@@ -210,11 +233,12 @@ The next 2-3 screens. A visitor who passed Tier 1 wants to evaluate whether this
 
 **Required sections (in order):**
 
-1. **Why / The Problem** — 2-4 sentences. What pain point does this solve?
+1. **Why / The Problem** — 2-4 sentences. What pain point does this solve? A strong Problem section lets readers self-qualify: "If [your situation], you need this." If the project serves multiple user segments (e.g., "haven't started yet" vs "already deployed"), address each briefly rather than blending into one generic statement.
 2. **Features** — bullet list, 3-6 items. Brief, scannable.
-3. **Quick Start** — the fastest path to a working example. 1-3 commands + minimal code (5-15 lines).
-4. **Install** — full installation instructions. Multiple package managers if applicable. Use `<details>` for alternative methods.
-5. **Usage** — basic example + 1-2 common use cases. Use `<details>` for advanced examples.
+3. **When to Use** — optional but recommended for tools and skills. Clarify what situation should prompt the reader to reach for this project. If there's a specific activation model ("use after X, not during Y") or a "not for" boundary, state it here. Can be combined into Usage if short.
+4. **Quick Start** — the fastest path to a working example. 1-3 commands + minimal code (5-15 lines).
+5. **Install** — full installation instructions. Multiple package managers if applicable. Use `<details>` for alternative methods.
+6. **Usage** — basic example + 1-2 common use cases. Use `<details>` for advanced examples.
 
 **Rules:**
 - Each section must fit on one screen or less.
@@ -379,7 +403,7 @@ Run this checklist before delivering any README. Report failures to the user.
 ### Structure
 
 - [ ] Tier 1 elements are present and above the first `---` or `## ` heading
-- [ ] Tier 1 is compact (logo + name + one-liner + badges + links, no more)
+- [ ] Tier 1 is compact (~250px height; additional brief elements are fine as long as they don't break compactness)
 - [ ] Tier 2 sections exist: at minimum "Why" (or "The Problem") + "Quick Start" (or "Usage") + "Install"
 - [ ] Tier 3 reference sections use `<details>` collapsible blocks
 - [ ] No Tier 3 content is placed in the Tier 1 or Tier 2 area
@@ -408,6 +432,14 @@ Run this checklist before delivering any README. Report failures to the user.
 - [ ] Tables are used for structured data (config options, prerequisites)
 - [ ] Mermaid / math / footnotes are used only when they communicate faster than prose
 
+### User Perspective
+
+- [ ] **Self-selection** — A reader can tell within 10 seconds whether they are the target user. Look for a qualifying statement: "If [your situation], this is for you." The Problem section or one-liner should let visitors self-select in or out, not just describe an abstract pain point
+- [ ] **When to reach for it** — README explains what situation, workflow stage, or trigger should make a reader think of this project. If there's a timing constraint ("use after X, not during Y"), it's stated explicitly
+- [ ] **Audience segmentation** — If multiple user segments exist (e.g., new users vs power users, different use cases), key sections address them distinctly rather than blending into one generic narrative
+- [ ] **Not-for boundary** — README clarifies what the project is NOT for, who should look elsewhere, or what problems it deliberately does not solve
+- [ ] **30-second test** — A first-time visitor can determine within 30 seconds: (1) am I the target user, (2) does this solve my current problem, (3) what do I do next
+
 ### Completeness
 
 - [ ] LICENSE file exists and is referenced
@@ -430,6 +462,8 @@ This skill uses the following template and analysis files:
 | `references/github-formatting.md` | GitHub-native formatting patterns, overflow strategy, and rules for diagrams, footnotes, math, task lists, and social proof. |
 | `references/logo-generation.md` | README fallback logo guidance: positioning, preset selection, runtime requirements, and when to use the local wordmark generator. |
 | `references/logo-examples.md` | Short example mappings from project feel to recommended logo presets. |
+| `references/gradient-palettes.md` | 2026-curated gradient palette reference with 45 named gradients for logo and badge color selection. |
+| `references/comparison-screenshots.md` | Before/after comparison PNG generation via Playwright for README case studies. |
 | `docs/logo-gallery.md` | Visual gallery of all logo presets with rendered SVG previews, palette table, and selection guidance. |
 
 When generating a README, always start from the appropriate asset template file. Read it, fill its placeholders, then adjust sections based on the project's needs.
