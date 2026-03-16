@@ -68,10 +68,15 @@ Add only if the project benefits from it and the user wants it.
 
 ## Features
 
-- <feature 1 — brief description>
-- <feature 2 — brief description>
-- <feature 3 — brief description>
-- <feature 4 — brief description>
+- <capability 1 — what the user gets, not how it works internally>
+- <capability 2>
+- <capability 3>
+- <capability 4>
+
+<!-- Write each feature as a user-facing capability.
+✓ "Detects leaked API keys before you push"
+✗ "Runs regex patterns against staged file diffs"
+If you find yourself describing internal steps or pipeline stages, move that to How It Works in Tier 3. -->
 
 ## Architecture At A Glance
 
@@ -178,6 +183,14 @@ If the README grows too long, move deep explanations into docs/ and link them re
 <!-- ============================================================ -->
 <!-- TIER 3: REFERENCE — Serve committed users                    -->
 <!-- ============================================================ -->
+
+<details>
+<summary><strong>How It Works</strong></summary>
+
+<Internal architecture, pipeline stages, data flow.
+Features tells the user what they get; this section explains how.>
+
+</details>
 
 <details>
 <summary><strong>Prerequisites</strong></summary>

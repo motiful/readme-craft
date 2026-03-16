@@ -55,7 +55,7 @@ If Node.js is not available, skip logo generation steps in all modes and note th
    - Project name
    - One-line description (value proposition, not technical description)
    - Primary language / framework
-   - Key features (3-6)
+   - Key features (3-6 for focused projects, more for feature-rich ones)
    - License
 2. Ask up to 4 focused presentation questions when they materially affect the output:
    - preserve an existing logo or brand system strictly
@@ -149,6 +149,28 @@ If Node.js is not available, skip logo generation steps in all modes and note th
 
 ---
 
+## What a README Is — and Is Not
+
+A README is a storefront, not a documentation site. In the Diátaxis framework (tutorials, how-to guides, reference, explanation), a README does not belong to any single type. It borrows elements from several:
+
+- **Explanation** → Why / The Problem
+- **How-to** → Quick Start, Install, Usage
+- **Reference** → Tier 3 collapsibles
+
+But a README has a mission that none of the four types cover: **convince**. The Features section exists to sell — to make a reader believe this project is worth their time in the fewest possible words. Features answer "what do I get?", not "how does it work internally?" or "why was it designed this way?"
+
+The structural principle behind the 3-tier system is **progressive disclosure**: reveal only what each visitor needs at their current level of commitment. Tier 1 is for the uncommitted (pitch), Tier 2 is for the evaluating (proof), Tier 3 is for the committed (reference). Every placement decision — "does this belong above the fold or in a collapsible?" — is a progressive disclosure decision.
+
+| Concept | Question it answers | Example |
+|---------|-------------------|---------|
+| **Features / Highlights** | "What do I get?" | "Scans your codebase and auto-generates a README" |
+| **How It Works** | "How does it run internally?" | "Config → Gather → Create → Validate → Publish" |
+| **Why / The Problem** | "Why do I need this?" | "Your skill is trapped in one project and can't be shared" |
+
+When Features and How It Works are mixed together, the README writes out a pipeline instead of selling capabilities.
+
+---
+
 ## The 3-Tier Layout Strategy
 
 This is the primary differentiator of readme-craft. Every README must organize content into three tiers based on how visitors consume information.
@@ -234,7 +256,10 @@ The next 2-3 screens. A visitor who passed Tier 1 wants to evaluate whether this
 **Required sections (in order):**
 
 1. **Why / The Problem** — 2-4 sentences. What pain point does this solve? A strong Problem section lets readers self-qualify: "If [your situation], you need this." If the project serves multiple user segments (e.g., "haven't started yet" vs "already deployed"), address each briefly rather than blending into one generic statement.
-2. **Features** — bullet list, 3-6 items. Brief, scannable.
+2. **Features / Highlights** — bullet list, benefit-oriented. Each item answers "what does the user get?", not "how does it work internally?" Write in benefit-oriented language ("scans your codebase and auto-generates a README"), not mechanism-oriented language ("uses AST parsing to extract function signatures"). If you find yourself describing pipeline stages or internal steps, move that to How It Works in Tier 3.
+   - **Scope:** 3-6 items for focused projects; scale to 7-10 for feature-rich projects. The goal is comprehensive coverage — do not cherry-pick a few capabilities and silently drop the rest. When the project has many features, group related capabilities into single items or use sub-descriptions rather than omitting.
+   - **Ordering:** Most important and most innovative capabilities first. Lead with what makes this project unique, not with table-stakes features every similar tool has.
+   - **Comprehensiveness check:** Read through all source files, reference docs, and config to inventory every user-facing capability. Then confirm every major capability appears in the Features list — either as its own item or clearly covered within another item.
 3. **When to Use** — optional but recommended for tools and skills. Clarify what situation should prompt the reader to reach for this project. If there's a specific activation model ("use after X, not during Y") or a "not for" boundary, state it here. Can be combined into Usage if short.
 4. **Quick Start** — the fastest path to a working example. 1-3 commands + minimal code (5-15 lines).
 5. **Install** — full installation instructions. Multiple package managers if applicable. Use `<details>` for alternative methods.
@@ -254,6 +279,7 @@ Reference material for committed users. Wrap each section in `<details><summary>
 
 **Optional sections (include only what's relevant):**
 
+- **How It Works** — internal mechanism, pipeline stages, architecture, data flow. This is where workflow diagrams, step-by-step internal logic, and technical details belong. Features (Tier 2) tells the user what they get; this section explains how it happens under the hood.
 - **Prerequisites** — runtime versions, system dependencies. Table format.
 - **Configuration** — config file options, environment variables. Table format.
 - **API Reference** — brief overview + link to full docs.
@@ -398,55 +424,9 @@ When including an Example section in a README:
 
 ## Quality Checklist
 
-Run this checklist before delivering any README. Report failures to the user.
+Run the 35-point checklist in `references/quality-checklist.md` before delivering any README. Report failures to the user.
 
-### Structure
-
-- [ ] Tier 1 elements are present and above the first `---` or `## ` heading
-- [ ] Tier 1 is compact (~250px height; additional brief elements are fine as long as they don't break compactness)
-- [ ] Tier 2 sections exist: at minimum "Why" (or "The Problem") + "Quick Start" (or "Usage") + "Install"
-- [ ] Tier 3 reference sections use `<details>` collapsible blocks
-- [ ] No Tier 3 content is placed in the Tier 1 or Tier 2 area
-
-### Content
-
-- [ ] One-liner is a value proposition, not a technical description
-- [ ] "Why" section describes a specific pain point, not generic motivation
-- [ ] Quick Start shows a working example in under 5 lines
-- [ ] Install commands cover the primary package manager for the ecosystem
-- [ ] Features list (or "What <name> Does" section) has 3-6 items (fewer is acceptable for focused projects)
-- [ ] Example sections are labeled as sample flows unless they come from a verified run
-- [ ] No section exceeds one screen of content without folding or linking
-- [ ] If the README is too long for one file, deep reference material is split to `docs/` or separate markdown files with relative links
-
-### Formatting
-
-- [ ] Logo uses `<picture>` element (if logo exists)
-- [ ] Generated wordmarks read as one dominant header line; avoid stacking the project name twice unless the user asks for it
-- [ ] Showcase image (if applicable) is placed between Tier 1 and the first Tier 2 heading
-- [ ] Badges are on 1-2 lines, max 6 badges
-- [ ] Badge URLs use reference-style links at bottom of file
-- [ ] Code blocks specify the language for syntax highlighting
-- [ ] Any callouts are genuinely necessary, not decorative formatting
-- [ ] No broken internal links (anchor links match actual heading slugs)
-- [ ] Tables are used for structured data (config options, prerequisites)
-- [ ] Mermaid / math / footnotes are used only when they communicate faster than prose
-
-### User Perspective
-
-- [ ] **Self-selection** — A reader can tell within 10 seconds whether they are the target user. Look for a qualifying statement: "If [your situation], this is for you." The Problem section or one-liner should let visitors self-select in or out, not just describe an abstract pain point
-- [ ] **When to reach for it** — README explains what situation, workflow stage, or trigger should make a reader think of this project. If there's a timing constraint ("use after X, not during Y"), it's stated explicitly
-- [ ] **Audience segmentation** — If multiple user segments exist (e.g., new users vs power users, different use cases), key sections address them distinctly rather than blending into one generic narrative
-- [ ] **Not-for boundary** — README clarifies what the project is NOT for, who should look elsewhere, or what problems it deliberately does not solve
-- [ ] **30-second test** — A first-time visitor can determine within 30 seconds: (1) am I the target user, (2) does this solve my current problem, (3) what do I do next
-
-### Completeness
-
-- [ ] LICENSE file exists and is referenced
-- [ ] Contributing info exists (inline or linked CONTRIBUTING.md)
-- [ ] Install, docs, and release links resolve or are clearly marked as pending
-- [ ] At least one usage example beyond Quick Start
-- [ ] Skill footer is present: `Crafted with [Readme Craft](...)` (prepend `Forged with [Skill Forge](...) ·` if generated through skill-forge's pipeline)
+The checklist covers 5 dimensions: Structure (5), Content (10), Formatting (10), User Perspective (5), Completeness (5).
 
 ---
 
@@ -462,6 +442,7 @@ This skill uses the following template and analysis files:
 | `references/github-formatting.md` | GitHub-native formatting patterns, overflow strategy, and rules for diagrams, footnotes, math, task lists, and social proof. |
 | `references/logo-generation.md` | README fallback logo guidance: positioning, preset selection, runtime requirements, and when to use the local wordmark generator. |
 | `references/logo-examples.md` | Short example mappings from project feel to recommended logo presets. |
+| `references/quality-checklist.md` | 35-point quality checklist across 5 dimensions: structure, content, formatting, user perspective, completeness. |
 | `references/gradient-palettes.md` | 2026-curated gradient palette reference with 45 named gradients for logo and badge color selection. |
 | `references/comparison-screenshots.md` | Before/after comparison PNG generation via Playwright for README case studies. |
 | `docs/logo-gallery.md` | Visual gallery of all logo presets with rendered SVG previews, palette table, and selection guidance. |

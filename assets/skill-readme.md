@@ -57,13 +57,17 @@
 
 <2-4 sentences describing the pain point. Be specific — what goes wrong without this skill? What does the user waste time on?>
 
-## What <skill-name> Does
+## Features
 
-<How the skill solves the problem. Show the workflow or key capabilities. Use a code block, table, or bullet list — whichever communicates fastest.>
+- <capability 1 — what the user gets, not how it works internally>
+- <capability 2>
+- <capability 3>
+- <capability 4>
 
-```text
-<visual workflow diagram or pipeline, if applicable>
-```
+<!-- Write each feature as a user-facing capability.
+✓ "Detects leaked API keys before you push"
+✗ "Runs regex patterns against staged file diffs"
+If you find yourself describing internal steps or pipeline stages, move that to How It Works in Tier 3. -->
 
 ## Usage
 
@@ -160,7 +164,9 @@ This skill still works fully on its own.
 <details>
 <summary><strong>How It Works</strong></summary>
 
-<Deeper explanation of the skill's workflow. Step-by-step execution logic. When to elaborate here vs in SKILL.md: if the user needs to understand the process to use the skill effectively, put it here. If it's internal agent logic, keep it in SKILL.md only.>
+<Internal mechanism, pipeline stages, or architecture.
+This is where workflow diagrams, step-by-step internal logic, and technical details belong.
+Keep Tier 2 Features focused on what the user gets; put the "how" here.>
 
 </details>
 
