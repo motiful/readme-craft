@@ -23,7 +23,59 @@ Use these only when they communicate faster than prose:
 
 ### `<details>`
 
-Use for Tier 3 or overflow content only. Do not hide the core value proposition, quick start, or install path inside collapsed sections.
+Use for reference material and secondary alternatives only. **Collapsed content is invisible to scanning readers — treat it as if it doesn't exist for first-time visitors.**
+
+**MUST NOT collapse** (decision-making sections — readers need these to evaluate the project):
+- Problem / Why
+- Features / What It Does
+- What Users Get / Value table
+- Usage / Quick Start
+- Install (primary command)
+- Prerequisites
+- Dependencies
+
+**OK to collapse** (reference material — committed users expand what they need):
+- How It Works / Pipeline stages / Architecture
+- Manual / alternative install methods
+- Advanced examples
+- Positioning / Not-for boundary
+- Project structure / What's Inside
+- Configuration reference
+- Changelog / Roadmap
+
+**Within a visible section**, secondary alternatives can use `<details>` (e.g., manual clone inside an open Install section). The parent section itself must stay open.
+
+### `<details>` vs Sub-Documents
+
+Both are progressive disclosure, but at different levels. Wrong choice = content either feels buried or bloats the README.
+
+| | `<details>` (same page) | Sub-document (`docs/xxx.md`) |
+|---|---|---|
+| Reader discovers it | By scanning — title is visible | By clicking a link — requires intent |
+| Reader returns to README | Scrolls — zero cost | Browser back — high cost |
+| Best length | Under ~30 lines / 1 screen | Over 1 screen |
+| Independence | No standalone value | Can be bookmarked, linked from elsewhere |
+| Update cadence | Changes with README | May update independently |
+
+**Decision rule:**
+
+```
+Content to disclose:
+
+1. Short (< ~30 lines)?
+   YES → <details> in README
+   NO  → continue
+
+2. Independently useful (someone might link to it directly)?
+   YES → sub-document in docs/
+   NO  → continue
+
+3. Updates on a different cadence than the README?
+   YES → sub-document in docs/
+   NO  → <details> in README (but consider splitting if > 1 screen)
+```
+
+**Anti-pattern:** collapsing everything in README while `docs/` sits empty. If you have 6+ collapsed sections, some of them are probably long enough to be sub-documents. If you have 0 collapsed sections, you're probably missing progressive disclosure.
 
 ### Relative Links
 
