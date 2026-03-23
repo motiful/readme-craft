@@ -69,14 +69,30 @@
 ✗ "Runs regex patterns against staged file diffs"
 If you find yourself describing internal steps or pipeline stages, move that to How It Works in Tier 3. -->
 
+## Quick Start
+
+<!-- Quick Start for skills = 2-4 DISTINCT OPERATIONS (different outcomes/deliverables).
+     One canonical trigger phrase per operation — not phrasing variations of the same thing.
+     Phrasing variations ("check my skill" / "audit this skill" / "review this skill") belong in Usage.
+     If your skill only has 1-2 real operations, show 1-2 lines. Don't pad.
+     Each line: canonical trigger + em dash + what the user gets. -->
+
+```text
+"<primary trigger phrase>"      — <result description: what happens, what you get>
+"<second trigger phrase>"       — <result description>
+"<third trigger phrase>"        — <result description>
+```
+
 ## Usage
 
-<Trigger phrases that activate this skill. What does the user say?>
+<Complete list of trigger phrases that activate this skill, plus detailed examples.>
 
 ```text
 "<trigger phrase 1>"
 "<trigger phrase 2>"
 "<trigger phrase 3>"
+"<trigger phrase 4>"
+"<trigger phrase 5>"
 ```
 
 **Example**

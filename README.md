@@ -61,7 +61,7 @@ readme-craft focuses on the final reading experience: a **3-tier layout strategy
 **Features:**
 
 - **Organizes by how readers scan, not what you want to say** — the 3-tier layout strategy puts the pitch above the fold, proof in the scan zone, and reference material in collapsibles
-- **35-point quality audit** — evaluates structure, content, formatting, user perspective, and completeness with specific pass/fail criteria for each
+- **41-point quality audit** — evaluates structure, content, formatting, user perspective, completeness, and reader lens with specific pass/fail criteria for each
 - **Separates Features from How It Works** — prevents the common anti-pattern of writing pipeline stages where user-facing capabilities should go; inventories all capabilities before writing
 - **Generates dark/light SVG wordmarks** — 9 presets across 2 rendering engines (figlet + cfonts), 45 named gradient palettes, human-in-the-loop candidate selection
 - **Selects badges by priority** — 6-level priority system (license → version → CI → downloads → coverage → platform) with copy-paste patterns for every ecosystem
@@ -82,7 +82,7 @@ Then tell your AI coding assistant:
 "Generate a README for this project"
 ```
 
-readme-craft scans the codebase, selects a template, fills it with the 3-tier layout, and runs the 35-point checklist before delivering.
+readme-craft scans the codebase, selects a template, fills it with the 3-tier layout, and runs the 41-point checklist before delivering.
 
 ## When to Reach for It
 
@@ -216,7 +216,7 @@ readme-craft/
 │   ├── github-formatting.md                # GitHub-native formatting and overflow strategy
 │   ├── logo-generation.md                  # Fallback logo rules, presets, and runtime requirements
 │   ├── logo-examples.md                    # Example mappings from project feel to logo preset
-│   ├── quality-checklist.md                # 35-point quality audit across 5 dimensions
+│   ├── quality-checklist.md                # 41-point quality audit across 6 dimensions
 │   ├── gradient-palettes.md                # 2026-curated gradient palette reference
 │   └── comparison-screenshots.md           # Before/after comparison PNG generation
 └── scripts/

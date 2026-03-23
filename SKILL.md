@@ -1,6 +1,6 @@
 ---
 name: readme-craft
-description: Generate and improve README files using a 3-tier layout strategy, GitHub-native formatting patterns, badge guidance, and interactive three-mode workflows. Use when the user says "write a README", "generate a README", "create a README", "improve this README", "review my README", "make my README better", "add badges", or "fix my README layout".
+description: Generate and improve README files using a 3-tier layout strategy, GitHub-native formatting patterns, badge guidance, and a state-driven workflow. Use when the user says "write a README", "generate a README", "create a README", "improve this README", "review my README", "make my README better", "add badges", or "fix my README layout".
 license: MIT
 metadata:
   author: motiful
@@ -31,121 +31,97 @@ Activate this skill when the user says any of:
 
 ---
 
-## Three Operation Modes
-
-Determine the mode from the user's request and available context.
+## Workflow
 
 ### Step 0: Dependency Check
 
-Before running any mode, verify the logo generation pipeline is available (needed only when the project has no existing logo):
+Before running any step, verify the logo generation pipeline is available:
 
 1. Check if `node` is available: `node --version` (requires Node.js 18+)
 2. Check if dependencies are installed: look for `node_modules/` in the readme-craft skill directory (`${CLAUDE_SKILL_DIR}`)
 3. If `node_modules/` is missing, run `npm install` in the skill directory
 
-If Node.js is not available, skip logo generation steps in all modes and note this to the user. The core README writing and review functionality works without Node.js — only fallback SVG wordmark generation requires it.
+Node.js not available → error: logo generation requires Node.js 18+. Install Node.js and retry.
 
-### Mode A: Create from Scratch
+### Step 1: Scan Project
 
-**Trigger:** User describes a project that does not yet exist as code, or explicitly asks to draft a README without scanning files.
+Scan the project to understand current state:
 
-**Steps:**
+- Check for existing README
+- Check for existing logo files (`logo-light.svg`, `logo-dark.svg`, `logo.svg`, `logo.png`)
+- Read `package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `SKILL.md` frontmatter, or equivalent for name, version, description, license, dependencies
+- Read existing docs (`CONTRIBUTING.md`, `CHANGELOG.md`, `LICENSE`) if present
+- Read the entry point and key source files to understand what the project does
+- Read CI config (`.github/workflows/`, `.gitlab-ci.yml`) to determine build/test commands
+- List directory structure (top 2 levels)
 
-1. Ask the user for (or extract from conversation):
-   - Project name
-   - One-line description (value proposition, not technical description)
-   - Primary language / framework
-   - Key features (3-6 for focused projects, more for feature-rich ones)
-   - License
-2. Ask up to 4 focused presentation questions when they materially affect the output:
-   - preserve an existing logo or brand system strictly
-   - social proof badges or widgets
-   - keep everything in README vs split deep reference content to `docs/`
-   - diagrams / math / footnotes only if the project genuinely benefits
-3. Select the appropriate template:
-   - `assets/universal-readme.md` for general OSS projects
-   - `assets/skill-readme.md` for AI agent skills
-4. Fill every `<placeholder>` in the template using the collected information.
-5. Apply the 3-Tier Layout Strategy (see below).
-6. Apply GitHub-Native Formatting Decisions (see below).
-7. Select badges using the Badge Selection guidance (see below).
-8. Include the dark/light mode logo stub if the project has a logo (see below).
-9. If the project has no logo, generate logo candidates for user selection:
-   a. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <tmpdir>/logo-candidates/`
-   b. Present the absolute file paths to the user so they can preview each candidate.
-   c. Wait for the user to pick one (or ask for more candidates / a specific preset).
-   d. Copy the selected SVG to `logo-light.svg` and generate the dark variant.
-   e. If the generated mark already spells the project name clearly, do not stack a second `<h1>` underneath it.
-   For preset selection rules, see `references/logo-generation.md`. For a visual gallery of all presets, see `docs/logo-gallery.md`.
-10. Remove any sections the user explicitly says are not needed.
-11. Apply Tone & Voice guidelines (see below).
-12. Run the Quality Checklist before delivering.
-13. Add the skill footer: `Crafted with [Readme Craft](https://github.com/motiful/readme-craft)`. If the README was also generated through skill-forge's pipeline, prepend `Forged with [Skill Forge](https://github.com/motiful/skill-forge) ·` before the readme-craft credit.
+Record findings as project state: `{has_readme, has_logo, has_codebase, has_skill_md, ...}`
 
-### Mode B: Create from Codebase
+### Step 2: Gather Information
 
-**Trigger:** User asks to generate a README and an existing codebase is available to scan.
+- `has_codebase` → derive name, description, features, install commands from code
+  - Derive the one-liner from package description + source code understanding
+  - Derive features from exports, CLI commands, API surface, or SKILL.md capabilities
+  - Derive install commands from package manager config or skill registration patterns
+  - Derive quick-start from examples/ directory, tests, main entry point, or install command. For general projects: install command + minimal code snippet or one CLI invocation. For skill projects (`has_skill_md`): list distinct operations from SKILL.md workflow modes — one canonical trigger phrase + outcome per operation. Phrasing variations of the same operation go in Usage, not Quick Start
+- `!has_codebase` → ask user for: project name, one-liner, key features, license
+- Either way: ask up to 4 targeted questions only when the scan cannot safely decide:
+  - should social proof appear in the README
+  - should deep content move to `docs/`
+  - should a diagram be added
+  - should an existing voice or visual style be preserved strictly
 
-**Steps:**
+### Step 3: README Content
 
-1. Scan the project to gather facts:
-   - Read `package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `SKILL.md` frontmatter, or equivalent for name, version, description, license, dependencies.
-   - Read existing docs (`CONTRIBUTING.md`, `CHANGELOG.md`, `LICENSE`) if present.
-   - Read the entry point and key source files to understand what the project does.
-   - List the directory structure (top 2 levels).
-   - Check for existing CI config (`.github/workflows/`, `.gitlab-ci.yml`) to determine build/test commands.
-   - Check for existing README — if found, switch to Mode C (Improve) unless user explicitly says "start fresh." Carry forward all data gathered in prior steps into Mode C's evaluation.
-2. Synthesize findings into the information needed for template filling:
-   - Derive the one-liner from package description + source code understanding.
-   - Derive features from exports, CLI commands, API surface, or SKILL.md capabilities.
-   - Derive install commands from package manager config or skill registration patterns.
-   - Derive quick-start from examples/ directory, tests, main entry point, or install command + trigger phrase for skills.
-3. Ask up to 4 targeted questions only when the scan cannot safely decide:
-   - should social proof appear in the README
-   - should deep content move to `docs/`
-   - should a diagram be added
-   - should an existing voice or visual style be preserved strictly
-4. Select and fill the appropriate template:
-   - `assets/universal-readme.md` for general OSS projects
-   - `assets/skill-readme.md` for AI agent skills (projects with a SKILL.md)
-5. Apply the 3-Tier Layout Strategy.
-6. Apply GitHub-Native Formatting Decisions (see below).
-7. Select badges based on detected ecosystem.
-8. If the project has no logo, generate logo candidates for user selection:
-   a. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <tmpdir>/logo-candidates/`
-   b. Present the absolute file paths to the user so they can preview each candidate.
-   c. Wait for the user to pick one (or ask for more candidates / a specific preset).
-   d. Copy the selected SVG to `logo-light.svg` and generate the dark variant.
-   e. If the generated mark already spells the project name clearly, do not stack a second `<h1>` underneath it.
-   For preset selection rules, see `references/logo-generation.md`. For a visual gallery of all presets, see `docs/logo-gallery.md`.
-9. Apply Tone & Voice guidelines (see below).
-10. Run the Quality Checklist before delivering.
-11. Add the skill footer: `Crafted with [Readme Craft](https://github.com/motiful/readme-craft)`. If the README was also generated through skill-forge's pipeline, prepend `Forged with [Skill Forge](https://github.com/motiful/skill-forge) ·` before the readme-craft credit.
+- `has_readme` AND user said "start fresh" or "from scratch" → discard existing README, fall through to `!has_readme` path below. Carry forward any facts gathered from the old README into template filling.
+- `has_readme` → evaluate existing README against 3-Tier Layout Strategy + Quality Checklist.
+  Produce improvement plan as a numbered list (what is wrong, what to do, where it applies).
+  For skill projects (`has_skill_md`): also check that Quick Start shows distinct operations (not just one trigger phrase, not phrasing variations). For general projects: check that Quick Start is a runnable example, not a prose description.
+  Ask the user to confirm the plan (or apply immediately if user said "just fix it").
+  Apply changes, preserving the user's existing content and voice. Refer to Tone & Voice guidelines as suggestions — do not override the author's style unless they explicitly ask for a tone change. Do NOT rewrite sections that are already good.
+- `!has_readme` → select template:
+  - General OSS project → `assets/universal-readme.md`. Skill-specific sections (trigger phrases, `npx skills add`, "Works Better With") do not apply — skip or omit them.
+  - AI agent skill (has SKILL.md) → `assets/skill-readme.md`. Populate Quick Start with distinct operations from SKILL.md modes, one per line
 
-### Mode C: Improve Existing README
+### Step 4: Logo
 
-**Trigger:** User says "improve", "review", "fix", or "make better" — or Mode B detected an existing README.
+- `has_logo` → use existing logo with `<picture>` element for dark/light mode (see Dark/Light Mode Logo below)
+- `!has_logo` → generate 5 candidates via `scripts/generate-logo.mjs`:
+  1. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <tmpdir>/logo-candidates/`
+  2. Present absolute file paths to user for preview
+  3. Wait for user to pick one (or ask for more candidates / a specific preset)
+  4. Copy selected SVG to `logo-light.svg` and generate dark variant
+  5. If the generated mark already spells the project name clearly, do not stack a second `<h1>` underneath it
 
-**Steps:**
+For preset selection rules, see `references/logo-generation.md`. For a visual gallery of all presets, see `docs/logo-gallery.md`.
 
-1. Read the existing README in full.
-2. Evaluate against the 3-Tier Layout Strategy:
-   - Is Tier 1 (above-fold) present and compact (~250px)?
-   - Is Tier 2 (scan) organized with code blocks and bullets?
-   - Is Tier 3 (reference) collapsible or linked?
-3. Evaluate GitHub-native formatting opportunities:
-   - Should `<details>` be used or reduced?
-   - Should content overflow move to `docs/` with relative links?
-   - Would Mermaid / math / footnotes help, or would they just add noise?
-   - Are social proof elements missing, excessive, or unverified?
-4. Evaluate against the Quality Checklist (see below).
-5. Produce a concrete improvement plan as a numbered list. Each item must state:
-   - What is wrong or missing
-   - What to do about it
-   - Where in the file the change applies
-6. Ask the user to confirm the plan (or apply immediately if user said "just fix it").
-7. Apply changes, preserving the user's existing content and voice. Refer to Tone & Voice guidelines as suggestions — do not override the author's style unless they explicitly ask for a tone change. Do NOT rewrite sections that are already good.
-8. Re-run the Quality Checklist on the result.
+### Step 5: Formatting & Badges
+
+- Apply the 3-Tier Layout Strategy (see below)
+- Apply GitHub-Native Formatting Decisions (see below)
+- Select badges based on ecosystem (see Badge Selection below)
+- Apply Tone & Voice guidelines (see below)
+
+### Step 6: Quality Check
+
+Two passes with different mindsets:
+
+**Pass 1: Structural checklist**
+1. Run the Quality Checklist (`references/quality-checklist.md`) — dimensions 1-5
+2. Report failures to the user
+3. Fix failures
+4. Re-run to confirm all checks pass
+
+**Pass 2: Reader Lens**
+After the structural checklist passes, re-read the entire README as a stranger who found this project from a search result. The structural checklist catches format problems; the Reader Lens catches comprehension problems — jargon that blocks understanding, features that describe internals instead of outcomes, unique value buried below table-stakes.
+
+Run the Reader Lens checks (dimension 6 in the Quality Checklist). These checks require a mindset shift: stop thinking about whether elements are present and start thinking about whether they *land*.
+
+### Step 7: Deliver
+
+1. Add the skill footer: `Crafted with [Readme Craft](https://github.com/motiful/readme-craft)`. If the README was also generated through skill-forge's pipeline, prepend `Forged with [Skill Forge](https://github.com/motiful/skill-forge) ·` before the readme-craft credit.
+2. Remove any sections the user explicitly says are not needed.
+3. Present final README.
 
 ---
 
@@ -183,7 +159,7 @@ The first screen a visitor sees. This is the 3-second pitch. Visitors who are no
 
 **Baseline elements (in order):**
 
-1. **Logo** (if exists) — centered, 80-120px height. Use `<picture>` for dark/light mode (see below). Omit if the project has no logo — do not use placeholders.
+1. **Logo** — centered, 80-120px height. Use existing if found, generate if not (see Step 4). Use `<picture>` for dark/light mode (see below).
 2. **Project name** — `<h1>`, centered.
 3. **One-liner** — a value proposition, not a technical description. Answer "why should I care?", not "what technology is this?" Example: ✓ "Stop writing validation logic by hand" vs ✗ "A TypeScript library for form validation."
 4. **Badges** — up to 6, on 1-2 lines. Trust signals: license, version, build status, downloads. Fewer is fine when fewer apply.
@@ -251,7 +227,7 @@ Use the standard `<p>` pattern by default. Switch to blockquote only when the wo
 
 The next 2-3 screens. A visitor who passed Tier 1 wants to evaluate whether this project is worth adopting.
 
-**Optional: Showcase Image** — For tools that produce visual transformations, place a before/after or hero image immediately after Tier 1's `---` separator, before the first `##` heading (or as the first element of Tier 2). This is a "show don't tell" proof that's more convincing than any text description. Not applicable to CLI tools, libraries, or other projects without visual output.
+**Showcase Image** — For tools that produce visual transformations, place a before/after or hero image immediately after Tier 1's `---` separator, before the first `##` heading (or as the first element of Tier 2). This is a "show don't tell" proof that's more convincing than any text description. Skip ONLY when: project has no visual transformation (CLI tools, libraries, pure APIs).
 
 **Required sections (in order):**
 
@@ -260,7 +236,7 @@ The next 2-3 screens. A visitor who passed Tier 1 wants to evaluate whether this
    - **Scope:** 3-6 items for focused projects; scale to 7-10 for feature-rich projects. The goal is comprehensive coverage — do not cherry-pick a few capabilities and silently drop the rest. When the project has many features, group related capabilities into single items or use sub-descriptions rather than omitting.
    - **Ordering:** Most important and most innovative capabilities first. Lead with what makes this project unique, not with table-stakes features every similar tool has.
    - **Comprehensiveness check:** Read through all source files, reference docs, and config to inventory every user-facing capability. Then confirm every major capability appears in the Features list — either as its own item or clearly covered within another item.
-3. **When to Use** — optional but recommended for tools and skills. Clarify what situation should prompt the reader to reach for this project. If there's a specific activation model ("use after X, not during Y") or a "not for" boundary, state it here. Can be combined into Usage if short.
+3. **When to Use** — include for tools and skills. Skip ONLY when: the Usage section already covers activation context. Clarify what situation should prompt the reader to reach for this project. If there's a specific activation model ("use after X, not during Y") or a "not for" boundary, state it here. Can be combined into Usage if short.
 4. **Quick Start** — the fastest path to a working example. 1-3 commands + minimal code (5-15 lines).
 5. **Install** — full installation instructions. Multiple package managers if applicable. Use `<details>` for alternative methods.
 6. **Usage** — basic example + 1-2 common use cases. Use `<details>` for advanced examples.
@@ -277,7 +253,7 @@ For AI agent skills, "Usage" (trigger phrases) may come before "Install" to prio
 
 Reference material for committed users. Wrap each section in `<details><summary>`.
 
-**Optional sections (include only what's relevant):**
+**Sections (include if the project has content for this section. Omit only when no content exists — not because it "seems unnecessary"):**
 
 - **How It Works** — internal mechanism, pipeline stages, architecture, data flow. This is where workflow diagrams, step-by-step internal logic, and technical details belong. Features (Tier 2) tells the user what they get; this section explains how it happens under the hood.
 - **Prerequisites** — runtime versions, system dependencies. Table format.
@@ -353,7 +329,7 @@ GitHub supports theme-aware images via the `<picture>` element. Always include t
 - The `<img>` fallback uses the light variant (GitHub default theme).
 - If the project only has one logo, use the same path for both `srcset` values and the `src` — still include the `<picture>` wrapper so a dark variant can be added later without restructuring.
 - Width 80-120px for inline logos (icon/symbol marks). Wordmark logos (text-rendered SVGs like figlet/cfonts output) may use 400-500px width since they serve as both logo and project name. Never use full-width banners in Tier 1.
-- If no logo exists, omit the `<picture>` block entirely. Do NOT use a placeholder image.
+- If no logo exists yet, generate one (see Step 4). Every delivered README includes a logo.
 
 **Fallback wordmarks:**
 
@@ -408,7 +384,7 @@ When writing README content, follow these guidelines:
 - **Professional but direct** — no exclamation marks, no emoji, no hype words ("revolutionary", "blazing fast").
 - **Concise** — if a sentence doesn't add information, cut it.
 
-In Mode C (Improve), these guidelines are recommendations, not overrides. Preserve the author's existing voice unless they explicitly ask for a tone change.
+When improving an existing README, these guidelines are recommendations, not overrides. Preserve the author's existing voice unless they explicitly ask for a tone change.
 
 ---
 
@@ -424,9 +400,9 @@ When including an Example section in a README:
 
 ## Quality Checklist
 
-Run the 35-point checklist in `references/quality-checklist.md` before delivering any README. Report failures to the user.
+Run the checklist in `references/quality-checklist.md` before delivering any README. Report failures to the user.
 
-The checklist covers 5 dimensions: Structure (5), Content (10), Formatting (10), User Perspective (5), Completeness (5).
+The checklist covers 6 dimensions: Structure (5), Content (12), Formatting (10), User Perspective (5), Completeness (5), Reader Lens (4). Dimensions 1-5 are structural; dimension 6 requires a mindset shift to first-time reader perspective.
 
 ---
 
@@ -442,7 +418,7 @@ This skill uses the following template and analysis files:
 | `references/github-formatting.md` | GitHub-native formatting patterns, overflow strategy, and rules for diagrams, footnotes, math, task lists, and social proof. |
 | `references/logo-generation.md` | README fallback logo guidance: positioning, preset selection, runtime requirements, and when to use the local wordmark generator. |
 | `references/logo-examples.md` | Short example mappings from project feel to recommended logo presets. |
-| `references/quality-checklist.md` | 35-point quality checklist across 5 dimensions: structure, content, formatting, user perspective, completeness. |
+| `references/quality-checklist.md` | 41-point quality checklist across 6 dimensions: structure, content, formatting, user perspective, completeness, reader lens. |
 | `references/gradient-palettes.md` | 2026-curated gradient palette reference with 45 named gradients for logo and badge color selection. |
 | `references/comparison-screenshots.md` | Before/after comparison PNG generation via Playwright for README case studies. |
 | `docs/logo-gallery.md` | Visual gallery of all logo presets with rendered SVG previews, palette table, and selection guidance. |
