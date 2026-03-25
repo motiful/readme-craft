@@ -13,6 +13,76 @@ A GitHub-native, layout-first README generation and improvement skill for AI age
 
 This skill is a standalone utility. It does NOT depend on skill-forge or any other skill. Higher-level tools (like skill-forge) may optionally delegate to readme-craft for layout and badge decisions.
 
+## Execution Procedure
+
+```python
+def readme_craft(project_path, user_request):
+    # STEP 0: Dependencies
+    run("scripts/setup.sh")                                    # exit non-zero → STOP
+
+    # STEP 1: Scan
+    state = scan_project(project_path)                         # see Scan section
+    # state = {has_readme, has_logo, has_codebase, has_skill_md, ...}
+
+    # STEP 2: Gather
+    if state.has_codebase:
+        info = derive_from_code(state)                         # see Gather section
+    else:
+        info = ask_user("name, one-liner, features, license")
+    info += ask_targeted_questions(state, max=4)               # only when scan can't decide
+
+    # STEP 3: README Content
+    if state.has_readme and user_said("start fresh"):
+        facts = extract_facts(state.readme)                    # carry forward, discard structure
+        state.has_readme = False
+
+    if state.has_readme:
+        plan = evaluate(state.readme, "3-Tier Layout + Quality Checklist")  # see 3-Tier section
+        if state.has_skill_md: assert_distinct_operations(plan, "Quick Start")
+        confirm_plan_with_user(plan)                           # HITL — or apply if "just fix it"
+        readme = apply_improvements(state.readme, plan)        # see Tone & Voice section
+    else:
+        template = "assets/skill-readme.md" if state.has_skill_md else "assets/universal-readme.md"
+        readme = fill_template(template, info)
+
+    # STEP 4: Logo
+    if state.has_logo:
+        readme = insert_picture_element(readme, state.logo)    # see Dark/Light Mode Logo section
+    else:
+        candidates = run(f'node scripts/generate-logo.mjs --candidates 5 --name "{info.name}"')
+        present_paths_to_user(candidates)                      # HITL — user picks
+        selected = wait_for_user_selection()                   # references/logo-generation.md
+        copy_to(".github/logo-light.svg", generate_dark(".github/logo-dark.svg"))
+        if wordmark_spells_name(selected): omit_h1()
+
+    # STEP 5: Formatting & Badges
+    readme = apply_3tier_layout(readme)                        # see The 3-Tier Layout Strategy
+    readme = apply_github_formatting(readme)                   # references/github-formatting.md
+    readme = select_and_apply_badges(readme, state)            # see Badge Selection + references/badges.md
+    readme = apply_tone_voice(readme)                          # see Tone & Voice section
+
+    # STEP 6: Quality Check
+    # Pass 1: structural
+    findings = run_checklist(readme, "dimensions 1-5")         # references/quality-checklist.md
+    report_to_user(findings)
+    readme = fix(readme, findings)
+    assert run_checklist(readme, "dimensions 1-5").all_pass
+
+    # Pass 2: reader lens
+    reader_findings = run_checklist(readme, "dimension 6")     # different mindset — stranger perspective
+    readme = fix(readme, reader_findings)
+
+    # STEP 7: GitHub Metadata
+    validate_or_create_metadata(state)                         # references/github-metadata.md
+    # .github/repo-meta.yml: description ≤ 350 chars, 8-20 topics
+    # gh repo edit only when publishing, not local-only
+
+    # STEP 8: Deliver
+    readme = add_footer(readme, state)                         # "Crafted with Readme Craft"
+    readme = remove_sections_user_declined(readme)
+    present_final(readme)
+```
+
 ---
 
 ## When to Use
@@ -31,24 +101,12 @@ Activate this skill when the user says any of:
 
 ---
 
-## Workflow
-
-### Step 0: Dependency Check
-
-Before running any step, verify the logo generation pipeline is available:
-
-1. Check if `node` is available: `node --version` (requires Node.js 18+)
-2. Check if dependencies are installed: look for `node_modules/` in the readme-craft skill directory (`${CLAUDE_SKILL_DIR}`)
-3. If `node_modules/` is missing, run `npm install` in the skill directory
-
-Node.js not available → error: logo generation requires Node.js 18+. Install Node.js and retry.
-
-### Step 1: Scan Project
+## Scan
 
 Scan the project to understand current state:
 
 - Check for existing README
-- Check for existing logo files in `.github/` first, then repo root (`logo-light.svg`, `logo-dark.svg`, `logo.svg`, `logo.png`). Canonical location: `.github/` (per skill-forge asset placement rules)
+- Check for existing logo files in `.github/` first, then repo root (`logo-light.svg`, `logo-dark.svg`, `logo.svg`, `logo.png`). Canonical location: `.github/`
 - Read `package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `SKILL.md` frontmatter, or equivalent for name, version, description, license, dependencies
 - Read existing docs (`CONTRIBUTING.md`, `CHANGELOG.md`, `LICENSE`) if present
 - Read the entry point and key source files to understand what the project does
@@ -57,7 +115,7 @@ Scan the project to understand current state:
 
 Record findings as project state: `{has_readme, has_logo, has_codebase, has_skill_md, ...}`
 
-### Step 2: Gather Information
+## Gather
 
 - `has_codebase` → derive name, description, features, install commands from code
   - Derive the one-liner from package description + source code understanding
@@ -70,74 +128,6 @@ Record findings as project state: `{has_readme, has_logo, has_codebase, has_skil
   - should deep content move to `docs/`
   - should a diagram be added
   - should an existing voice or visual style be preserved strictly
-
-### Step 3: README Content
-
-- `has_readme` AND user said "start fresh" or "from scratch" → discard existing README, fall through to `!has_readme` path below. Carry forward any facts gathered from the old README into template filling.
-- `has_readme` → evaluate existing README against 3-Tier Layout Strategy + Quality Checklist.
-  Produce improvement plan as a numbered list (what is wrong, what to do, where it applies).
-  For skill projects (`has_skill_md`): also check that Quick Start shows distinct operations (not just one trigger phrase, not phrasing variations). For general projects: check that Quick Start is a runnable example, not a prose description.
-  Ask the user to confirm the plan (or apply immediately if user said "just fix it").
-  Apply changes, preserving the user's existing content and voice. Refer to Tone & Voice guidelines as suggestions — do not override the author's style unless they explicitly ask for a tone change. Do NOT rewrite sections that are already good.
-- `!has_readme` → select template:
-  - General OSS project → `assets/universal-readme.md`. Skill-specific sections (trigger phrases, `npx skills add`, "Works Better With") do not apply — skip or omit them.
-  - AI agent skill (has SKILL.md) → `assets/skill-readme.md`. Populate Quick Start with distinct operations from SKILL.md modes, one per line
-
-### Step 4: Logo
-
-- `has_logo` → use existing logo with `<picture>` element for dark/light mode (see Dark/Light Mode Logo below)
-- `!has_logo` → generate 5 candidates via `scripts/generate-logo.mjs`:
-  1. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <tmpdir>/logo-candidates/`
-  2. Present absolute file paths to user for preview
-  3. Wait for user to pick one (or ask for more candidates / a specific preset)
-  4. Copy selected SVG to `.github/logo-light.svg` and generate dark variant as `.github/logo-dark.svg`
-  5. If the generated mark already spells the project name clearly, do not stack a second `<h1>` underneath it
-
-For preset selection rules, see `references/logo-generation.md`. For a visual gallery of all presets, see `docs/logo-gallery.md`.
-
-### Step 5: Formatting & Badges
-
-- Apply the 3-Tier Layout Strategy (see below)
-- Apply GitHub-Native Formatting Decisions (see below)
-- Select badges based on ecosystem (see Badge Selection below)
-- Apply Tone & Voice guidelines (see below)
-
-### Step 6: Quality Check
-
-Two passes with different mindsets:
-
-**Pass 1: Structural checklist**
-1. Run the Quality Checklist (`references/quality-checklist.md`) — dimensions 1-5
-2. Report failures to the user
-3. Fix failures
-4. Re-run to confirm all checks pass
-
-**Pass 2: Reader Lens**
-After the structural checklist passes, re-read the entire README as a stranger who found this project from a search result. The structural checklist catches format problems; the Reader Lens catches comprehension problems — jargon that blocks understanding, features that describe internals instead of outcomes, unique value buried below table-stakes.
-
-Run the Reader Lens checks (dimension 6 in the Quality Checklist). These checks require a mindset shift: stop thinking about whether elements are present and start thinking about whether they *land*.
-
-### Step 7: GitHub Metadata
-
-Create or update the GitHub repository metadata (description, topics) for discoverability.
-
-1. Check if `.github/repo-meta.yml` exists
-2. If not, create it:
-   - Derive description from the README one-liner (Tier 1 value proposition), trimmed to 350 chars
-   - For skill projects: cross-check alignment with SKILL.md `description` field
-   - Detect project domain and apply Tier 1 tags (high-traffic)
-   - Research and propose Tier 2 candidates (domain-specific). Present to user for confirmation
-   - Detect Tier 3 tags from ecosystem signals (platform, framework)
-3. If it exists, validate: description ≤ 350 chars, 8-20 topics, topic format `^[a-z0-9][a-z0-9-]*$`
-4. Apply via `gh repo edit` (only when publishing — skip for local-only projects)
-
-Full specification: `references/github-metadata.md`
-
-### Step 8: Deliver
-
-1. Add the skill footer: `Crafted with [Readme Craft](https://github.com/motiful/readme-craft)`. If the README was also generated through skill-forge's pipeline, prepend `Forged with [Skill Forge](https://github.com/motiful/skill-forge) ·` before the readme-craft credit.
-2. Remove any sections the user explicitly says are not needed.
-3. Present final README.
 
 ---
 
@@ -484,7 +474,7 @@ This skill uses the following template and analysis files:
 | `references/github-formatting.md` | GitHub-native formatting patterns, overflow strategy, and rules for diagrams, footnotes, math, task lists, and social proof. |
 | `references/logo-generation.md` | README fallback logo guidance: positioning, preset selection, runtime requirements, and when to use the local wordmark generator. |
 | `references/logo-examples.md` | Short example mappings from project feel to recommended logo presets. |
-| `references/quality-checklist.md` | 44-point quality checklist across 6 dimensions: structure, content, formatting, user perspective, completeness, reader lens. |
+| `references/quality-checklist.md` | 45-point quality checklist across 6 dimensions: structure, content, formatting, user perspective, completeness, reader lens. |
 | `references/gradient-palettes.md` | 2026-curated gradient palette reference with 45 named gradients for logo and badge color selection. |
 | `references/comparison-screenshots.md` | Before/after comparison PNG generation via Playwright for README case studies. |
 | `references/github-metadata.md` | GitHub repository metadata: About/description rules (≤350 chars), topic 3-tier selection, `.github/repo-meta.yml` format, `gh repo edit` workflow. |

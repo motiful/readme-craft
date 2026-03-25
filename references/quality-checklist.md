@@ -1,8 +1,22 @@
+---
+name: quality-checklist
+description: "45-point quality checklist across 6 dimensions: Structure (7), Content (13), Formatting (10), User Perspective (5), Completeness (6), Reader Lens (4). Dimensions 1-5 are structural; dimension 6 requires first-time reader perspective."
+---
+
 # Quality Checklist
 
 Run this checklist before delivering any README. Report failures to the user.
 
 **Total: 45 checks** across 6 dimensions. Dimensions 1-5 are structural. Dimension 6 (Reader Lens) requires a mindset shift — re-read the README as a stranger, not as the person who just wrote it.
+
+## Execution Procedure
+
+```
+run_quality_check(readme, project_state) → findings[]
+
+pass_1 (structural): run dimensions 1-5, report failures, fix, re-run to confirm
+pass_2 (reader lens): re-read as stranger, run dimension 6, flag comprehension issues
+```
 
 ## Structure (7)
 
@@ -51,7 +65,7 @@ Run this checklist before delivering any README. Report failures to the user.
 - [ ] **Not-for boundary** — README clarifies what the project is NOT for, who should look elsewhere, or what problems it deliberately does not solve. Implicit signals count: a "When to Use" table with explicit "No" rows, a Positioning section with "does not" statements, or a one-liner that inherently excludes non-target users. Only flag when none of these exist
 - [ ] **30-second test** — A first-time visitor can determine within 30 seconds: (1) am I the target user, (2) does this solve my current problem, (3) what do I do next
 
-## Completeness (5)
+## Completeness (6)
 
 - [ ] LICENSE file exists and is referenced
 - [ ] Contributing info exists (inline or linked CONTRIBUTING.md)

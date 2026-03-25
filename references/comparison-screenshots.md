@@ -1,6 +1,22 @@
+---
+name: comparison-screenshots
+description: Before/after comparison PNG generation via Playwright for README case studies. Covers CLI usage, layout modes (side-by-side, stacked), crop sizing, and file placement rules.
+---
+
 # Comparison Screenshots
 
 Generate before/after comparison PNGs for README case studies. Renders markdown as GitHub-styled HTML and captures via Playwright Chromium.
+
+## Execution Procedure
+
+```
+generate_comparison(before_md, after_md, options) → png_path
+
+prerequisites: npm install, npx playwright install chromium
+render: markdown → GitHub-styled HTML (side-by-side or stacked)
+capture: Playwright Chromium screenshot with crop and scale options
+output: PNG to docs/ (not examples/)
+```
 
 ## Prerequisites
 

@@ -1,7 +1,31 @@
+---
+name: gradient-palettes
+description: "2026-curated gradient palette reference with 45 named gradients across 9 categories (Warm, Cool, Nature, Neon, Pastel, Monochrome, Dark, Contrast, Developer). Includes design rules for premium gradients and CSS/SVG implementation patterns."
+---
+
 # Gradient Palettes for Developer Tools & README Branding (2026)
 
 Curated gradient pairs optimized for text gradients on light and dark backgrounds.
 Sourced from 2026 design trends, developer tool aesthetics, and premium branding research.
+
+## Execution Procedure
+
+```
+select_palette(project_feel, background) → palette
+
+lookup: match project aesthetic to category (warm, cool, neon, dark, etc.)
+verify: gradient follows analogous hue rule (30-60 degrees apart)
+adapt: light background → full saturation; dark background → luminosity shift
+```
+
+## TOC
+
+- [Design Rules](#what-makes-a-gradient-look-high-end-vs-cheap-2026-rules)
+- [Warm](#category-1-warm-reds-oranges-golds) · [Cool](#category-2-cool-blues-teals-cyans) · [Nature](#category-3-nature-greens-earth-tones) · [Neon](#category-4-neon--electric-vibrant-high-contrast) · [Pastel](#category-5-pastel--soft-muted-elegant) · [Monochrome](#category-6-monochrome--metallic-silvers-grays-with-a-tint) · [Dark](#category-7-dark--moody-deep-purples-dark-blues) · [Contrast](#category-8-contrast-pairs-premium-feel)
+- [Developer-Tool Palettes](#bonus-developer-tool-specific-palettes)
+- [Quick Reference](#quick-reference-best-works-on-both-palettes)
+- [CSS Implementation](#css-implementation-pattern) · [SVG Implementation](#for-github-readme-svg-approach)
+- [Sources](#sources)
 
 ## What Makes a Gradient Look "High-End" vs "Cheap" (2026 Rules)
 

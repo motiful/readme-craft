@@ -1,8 +1,22 @@
+---
+name: logo-examples
+description: Example mappings from project feel (infra/terminal, polished/dark, compact/quirky, etc.) to recommended logo presets. Includes anti-patterns to avoid.
+---
+
 # Logo Selection Examples
 
 These are short examples for the "aesthetic choice" part of README generation.
 
 They are not exhaustive. They exist to help the agent make a quick, defensible preset choice.
+
+## Execution Procedure
+
+```
+match_preset(project_feel) → preset_name
+
+for each example: project_feel → preset + palette + rationale
+anti-patterns: random alternatives, decorative frames, treating wordmarks as brand systems
+```
 
 ## Example 1
 

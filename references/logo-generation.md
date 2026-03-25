@@ -1,6 +1,23 @@
+---
+name: logo-generation
+description: Fallback logo generation system with figlet and cfonts engines, preset selection logic, Node.js 18+ runtime requirements, candidate selection workflow, and HITL presentation rules.
+---
+
 # README Logo Generation
 
 This reference describes the fallback logo system used by `readme-craft` when a project has no existing logo but would benefit from a small SVG wordmark in the README.
+
+## Execution Procedure
+
+```
+generate_logo(project_name, options) → svg_files
+
+check: Node.js 18+, npm dependencies installed
+select_preset: project category → engine + font + layout (see logo-examples.md)
+generate: run scripts/generate-logo.mjs with --candidates N
+present: absolute file paths to user for HITL selection
+output: copy selected to .github/logo-light.svg, generate dark variant as .github/logo-dark.svg
+```
 
 ## Positioning
 

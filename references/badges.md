@@ -1,8 +1,23 @@
+---
+name: badges
+description: Copy-paste badge patterns for shields.io organized by category (license, version, CI, downloads, coverage, platform, Agent Skills). Provides priority ordering and reference-style link format.
+---
+
 # Badge Reference
 
 Copy-paste badge patterns for shields.io. Replace `<org>`, `<repo>`, `<package>` with your values.
 
 All badges use reference-style links. Define URLs at the bottom of your README.
+
+## Execution Procedure
+
+```
+select_badges(project) → badge_lines[]
+
+check: ecosystem signals (package.json, Cargo.toml, pyproject.toml, CI config)
+select: up to 6 badges by priority (license → version → CI → downloads → coverage → platform)
+format: reference-style links at bottom of README
+```
 
 ---
 

@@ -3,6 +3,12 @@ name: github-metadata
 description: GitHub repository metadata management including About/description rules (≤350 chars, derived from README one-liner), topic selection via 3-tier system (big traffic, domain-precise, ecosystem), and .github/repo-meta.yml format specification. Works for all project types, not just skills.
 ---
 
+# GitHub Metadata
+
+Source of truth: `.github/repo-meta.yml` in the repo root.
+
+## Execution Procedure
+
 ```
 apply_metadata(repo_path) → applied | findings[]
 
@@ -13,10 +19,6 @@ assert no critical findings
 report findings to user (HITL)
 apply via gh repo edit
 ```
-
-# GitHub Metadata
-
-Source of truth: `.github/repo-meta.yml` in the repo root.
 
 ## `.github/repo-meta.yml` Format
 

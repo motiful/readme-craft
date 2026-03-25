@@ -1,6 +1,21 @@
+---
+name: github-formatting
+description: GitHub-native formatting decision rules covering default tools (relative links, tables, picture element), optional tools (Mermaid, footnotes, math, task lists), and the no-details principle. Guides when to use each pattern.
+---
+
 # GitHub-Native Formatting
 
 Use GitHub formatting features deliberately. The goal is clarity, not decoration.
+
+## Execution Procedure
+
+```
+select_formatting(content_type, length) → formatting_decisions
+
+default: relative links, teaser + docs/, tables, <picture>
+optional: Mermaid (architecture), footnotes (citations), math (formulas), task lists (roadmap)
+reject: <details> — always. Inline or move to docs/
+```
 
 ## Default Tools
 
