@@ -2,8 +2,8 @@
 
 > This template works for any open source project — library, CLI, app, framework.
 > Replace all `<placeholders>` and remove this instruction block before publishing.
-> Delete sections that don't apply. Collapsible sections are optional — expand them
-> if the content is important enough for your project.
+> Delete sections that don't apply. Use the Checkout Test to decide placement:
+> passes (removal reduces clone likelihood) → inline; fails → teaser + `docs/` link.
 
 ---
 
@@ -116,8 +116,8 @@ pnpm add <package-name>
 
 Requires <runtime> <version>+. See [Prerequisites](#prerequisites) for details.
 
-<details>
-<summary>Other installation methods</summary>
+<!-- If alternative install methods are short, show inline.
+     If long, move to docs/install-alternatives.md with teaser link. -->
 
 ### From source
 
@@ -126,14 +126,6 @@ git clone https://github.com/<org>/<repo>.git
 cd <repo>
 <build-commands>
 ```
-
-### Homebrew / apt / cargo / pip
-
-```bash
-<alternative install command>
-```
-
-</details>
 
 ## Usage
 
@@ -149,22 +141,14 @@ cd <repo>
 <example for a common use case>
 ```
 
-<details>
-<summary>More examples</summary>
+<!-- If advanced examples are short, show inline.
+     If long, move to docs/examples.md with teaser link. -->
 
 ### <Advanced Use Case>
 
 ```<language>
 <advanced example>
 ```
-
-### <Another Use Case>
-
-```<language>
-<another example>
-```
-
-</details>
 
 ## Further Reading
 
@@ -181,102 +165,41 @@ If the README grows too long, move deep explanations into docs/ and link them re
 ---
 
 <!-- ============================================================ -->
-<!-- TIER 3: REFERENCE — Serve committed users                    -->
+<!-- TIER 3: SUPPORTING CONTENT — Serve committed users            -->
+<!-- Non-decision sections: teaser + docs/ link.                   -->
+<!-- Short sections (< ~15 lines): keep inline.                    -->
+<!-- No <details>. If it's worth including, show it.               -->
+<!-- HITL: propose moves to user before executing.                 -->
 <!-- ============================================================ -->
 
-<details>
-<summary><strong>How It Works</strong></summary>
-
-<Internal architecture, pipeline stages, data flow.
-Features tells the user what they get; this section explains how.>
-
-</details>
-
-<details>
-<summary><strong>Prerequisites</strong></summary>
+<!-- Prerequisites: helps decide ("can I run this?") → always inline -->
+## Prerequisites
 
 | Requirement | Version |
 |-------------|---------|
 | <runtime> | <version>+ |
 | <dependency> | <version>+ |
 
-</details>
+<!-- How It Works: non-decision → teaser + docs/ if long, inline if short -->
+## How It Works
 
-<details>
-<summary><strong>Configuration</strong></summary>
+<1-3 sentence summary of internal architecture or data flow.>
 
-<If the project has a config file or environment variables, document them here.>
+→ [Detailed architecture](docs/how-it-works.md)
 
-| Option | Default | Description |
-|--------|---------|-------------|
-| `<option>` | `<default>` | <description> |
+<!-- Configuration: non-decision → teaser + docs/ if long -->
+## Configuration
 
-**Environment Variables:**
+<1-sentence summary of what's configurable.>
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `<VAR_NAME>` | <Yes/No> | <description> |
+→ [Configuration reference](docs/configuration.md)
 
-</details>
+<!-- Development: non-decision → teaser + docs/ if long -->
+## Development
 
-<details>
-<summary><strong>API Reference</strong></summary>
+<1-sentence summary.>
 
-<Brief API overview. For full API docs, link to a separate file or hosted docs.>
-
-See the full [API Documentation](<docs-url/api>).
-
-</details>
-
-<details>
-<summary><strong>Project Structure</strong></summary>
-
-```text
-<repo>/
-├── src/                  # Source code
-│   ├── <module>/         # <description>
-│   └── index.<ext>       # Entry point
-├── tests/                # Test suite
-├── docs/                 # Documentation
-├── <config-file>         # <description>
-└── README.md
-```
-
-</details>
-
-<details>
-<summary><strong>Development</strong></summary>
-
-```bash
-# Clone the repository
-git clone https://github.com/<org>/<repo>.git
-cd <repo>
-
-# Install dependencies
-<install-command>
-
-# Run tests
-<test-command>
-
-# Run linter
-<lint-command>
-
-# Build
-<build-command>
-```
-
-</details>
-
-<details>
-<summary><strong>Roadmap</strong></summary>
-
-- [ ] <planned feature 1>
-- [ ] <planned feature 2>
-- [ ] <planned feature 3>
-
-See the [open issues](https://github.com/<org>/<repo>/issues) for more.
-
-</details>
+→ [Development guide](docs/development.md)
 
 ## Contributing
 

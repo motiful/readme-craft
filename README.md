@@ -40,7 +40,7 @@ Most READMEs are either walls of text that bury what matters, or empty stubs tha
 
 If you write READMEs for GitHub repos and want them to be scannable from the first screen, readme-craft is for you.
 
-readme-craft focuses on the final reading experience: a **3-tier layout strategy** that decides what belongs above the fold, what should be easy to scan, and what should be folded into reference material. It is a GitHub-native, layout-first README skill for READMEs that need to serve both human readers and the agents that will keep iterating on them.
+readme-craft focuses on the final reading experience: a **3-tier layout strategy** that decides what belongs above the fold, what should be easy to scan, and what deep content moves to `docs/`. It is a GitHub-native, layout-first README skill for READMEs that need to serve both human readers and the agents that will keep iterating on them.
 
 **Not for:** brand identity design, non-GitHub platforms (GitLab/Bitbucket rendering differs), or non-Markdown documentation formats (Sphinx, Docusaurus, etc.).
 
@@ -50,7 +50,7 @@ readme-craft focuses on the final reading experience: a **3-tier layout strategy
 |------|---------|---------|
 | **1** Above the fold (~250px) | Logo, name, one-liner, badges, quick links | 3-second pitch |
 | **2** Scan quickly (2-3 screens) | Problem, features, quick start, install, usage | Prove value |
-| **3** Reference (collapsible) | Config, API, structure, roadmap, contributing | Serve committed users |
+| **3** Supporting content | Config, API, structure, roadmap, contributing | Serve committed users |
 
 **Three ways to use it:**
 
@@ -60,13 +60,13 @@ readme-craft focuses on the final reading experience: a **3-tier layout strategy
 
 **Features:**
 
-- **Organizes by how readers scan, not what you want to say** — the 3-tier layout strategy puts the pitch above the fold, proof in the scan zone, and reference material in collapsibles
-- **41-point quality audit** — evaluates structure, content, formatting, user perspective, completeness, and reader lens with specific pass/fail criteria for each
+- **Organizes by how readers scan, not what you want to say** — the 3-tier layout strategy puts the pitch above the fold, proof in the scan zone, and supporting content as teasers linking to `docs/`
+- **44-point quality audit** — evaluates structure, content, formatting, user perspective, completeness, and reader lens with specific pass/fail criteria for each
 - **Separates Features from How It Works** — prevents the common anti-pattern of writing pipeline stages where user-facing capabilities should go; inventories all capabilities before writing
 - **Generates dark/light SVG wordmarks** — 9 presets across 2 rendering engines (figlet + cfonts), 45 named gradient palettes, human-in-the-loop candidate selection
 - **Selects badges by priority** — 6-level priority system (license → version → CI → downloads → coverage → platform) with copy-paste patterns for every ecosystem
 - **Enforces tone and voice** — addresses the reader as "you", uses third person for the software, strips hype words; in improvement mode, preserves the author's existing voice
-- **Applies GitHub-native formatting** — `<picture>` for dark/light logos, `<details>` for reference sections, relative links for doc splits, reference-style badges, Mermaid/math only when faster than prose
+- **Applies GitHub-native formatting** — `<picture>` for dark/light logos, teaser + `docs/` links for deep content, relative links for doc splits, reference-style badges, Mermaid/math only when faster than prose
 - **Generates before/after comparison screenshots** — side-by-side or stacked PNGs via Playwright for case studies and visual proof
 - **Ships reusable templates with guidance** — dedicated layouts for general OSS projects and AI agent skills, with benefit-oriented placeholders and HTML comment instructions
 
@@ -82,7 +82,7 @@ Then tell your AI coding assistant:
 "Generate a README for this project"
 ```
 
-readme-craft scans the codebase, selects a template, fills it with the 3-tier layout, and runs the 41-point checklist before delivering.
+readme-craft scans the codebase, selects a template, fills it with the 3-tier layout, and runs the 44-point checklist before delivering.
 
 ## When to Reach for It
 
@@ -119,7 +119,7 @@ Sample flow, not a transcript from a verified run:
 
 - Tier 1 keeps the value proposition, trust badges, and quick links visible immediately.
 - Tier 2 keeps problem, features, usage, and install sections short enough to scan without hunting.
-- Tier 3 folds structure, configuration, roadmap, and contribution details into reference sections.
+- Tier 3 keeps deep reference (structure, configuration, roadmap) as teasers linking to `docs/`.
 
 ## Install
 
@@ -129,38 +129,20 @@ Install directly from the public GitHub repository:
 npx skills add motiful/readme-craft
 ```
 
-<details>
-<summary>Common skill roots</summary>
+**Manual registration** (clone + symlink):
 
 ```bash
 git clone https://github.com/motiful/readme-craft ~/skills/readme-craft
 
-# Pick only the roots you actually use.
-# You do not need to register every platform.
-# If a root does not exist yet, create it only intentionally.
-
-# Claude Code
-ln -sfn ~/skills/readme-craft ~/.claude/skills/readme-craft
-
-# Codex
-ln -sfn ~/skills/readme-craft ~/.agents/skills/readme-craft
-
-# VS Code / GitHub Copilot
-ln -sfn ~/skills/readme-craft ~/.copilot/skills/readme-craft
-
-# Cursor (if your setup ignores the symlink, use a real copy instead)
-ln -sfn ~/skills/readme-craft ~/.cursor/skills/readme-craft
-
-# Windsurf
-ln -sfn ~/skills/readme-craft ~/.codeium/windsurf/skills/readme-craft
+# Register only in roots you actually use.
+ln -sfn ~/skills/readme-craft ~/.claude/skills/readme-craft      # Claude Code
+ln -sfn ~/skills/readme-craft ~/.agents/skills/readme-craft      # Codex
+ln -sfn ~/skills/readme-craft ~/.copilot/skills/readme-craft     # VS Code / GitHub Copilot
+ln -sfn ~/skills/readme-craft ~/.cursor/skills/readme-craft      # Cursor
+ln -sfn ~/skills/readme-craft ~/.codeium/windsurf/skills/readme-craft  # Windsurf
 ```
 
-</details>
-
----
-
-<details>
-<summary><strong>Prerequisites</strong></summary>
+### Prerequisites
 
 The main README writing and review flow does not require repo-local dependencies. The only local runtime path is fallback logo generation.
 
@@ -168,42 +150,13 @@ The main README writing and review flow does not require repo-local dependencies
 - Run `npm install` in the `readme-craft` root before using the logo generator
 - If the project already has a logo, you can skip this step
 
-The logo generator (`scripts/generate-logo.mjs`) runs locally, reads no external data, and requires no special permissions. It uses `figlet` and `cfonts` npm packages to render text into SVG files.
+## How It Works
 
-</details>
+readme-craft operates in three modes: create from scratch (no code), create from codebase (scan + generate), and improve existing (evaluate + targeted fixes). All three produce READMEs organized by the 3-tier layout strategy with GitHub-native formatting.
 
-<details>
-<summary><strong>How It Works</strong></summary>
+→ [Operation modes, tier strategy, and formatting details](docs/how-it-works.md)
 
-### Three Operation Modes
-
-**Mode A: Create from Scratch** — User describes a project without code. The skill collects project info (name, description, features, license), selects a template, and produces a 3-tier README.
-
-**Mode B: Create from Codebase** — Scans the project for package configs, entry points, CI config, and existing docs. Synthesizes findings into a complete README using the detected ecosystem.
-
-**Mode C: Improve Existing** — Evaluates an existing README against the 3-tier strategy and quality checklist. Produces a numbered improvement plan, then applies changes while preserving the author's voice.
-
-### The 3-Tier Layout Strategy
-
-The core differentiator. Every README organizes content by how visitors consume information:
-
-- **Tier 1 (~250px):** The storefront window — logo, name, value proposition, trust badges, quick links. Visitors who aren't interested leave here.
-- **Tier 2 (2-3 screens):** The product demo — problem statement, features, quick start, install, usage. Proves the project is worth adopting.
-- **Tier 3 (collapsible):** The reference manual — config, API, project structure, contributing, roadmap. Wrapped in `<details>` for committed users.
-
-### GitHub-Native Formatting
-
-readme-craft treats GitHub formatting as part of the README architecture, not as decoration:
-
-- Use `<details>` to keep reference material out of the main reading path.
-- Use relative links when the README needs to spill into `docs/` or sibling markdown files.
-- Use Mermaid, math, or footnotes only when they explain faster than plain prose.
-- Keep social proof optional. Stars, contributors, and popularity signals should be deliberate, not default.
-
-</details>
-
-<details>
-<summary><strong>What's Inside</strong></summary>
+## What's Inside
 
 ```text
 readme-craft/
@@ -216,7 +169,7 @@ readme-craft/
 │   ├── github-formatting.md                # GitHub-native formatting and overflow strategy
 │   ├── logo-generation.md                  # Fallback logo rules, presets, and runtime requirements
 │   ├── logo-examples.md                    # Example mappings from project feel to logo preset
-│   ├── quality-checklist.md                # 41-point quality audit across 6 dimensions
+│   ├── quality-checklist.md                # 44-point quality audit across 6 dimensions
 │   ├── gradient-palettes.md                # 2026-curated gradient palette reference
 │   └── comparison-screenshots.md           # Before/after comparison PNG generation
 └── scripts/
@@ -225,8 +178,6 @@ readme-craft/
     ├── logo/                               # Logo engine modules (figlet, cfonts, SVG)
     └── comparison/                         # Comparison rendering and screenshot modules
 ```
-
-</details>
 
 ## Contributing
 

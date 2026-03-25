@@ -2,17 +2,19 @@
 
 Run this checklist before delivering any README. Report failures to the user.
 
-**Total: 41 checks** across 6 dimensions. Dimensions 1-5 are structural. Dimension 6 (Reader Lens) requires a mindset shift — re-read the README as a stranger, not as the person who just wrote it.
+**Total: 45 checks** across 6 dimensions. Dimensions 1-5 are structural. Dimension 6 (Reader Lens) requires a mindset shift — re-read the README as a stranger, not as the person who just wrote it.
 
-## Structure (5)
+## Structure (7)
 
 - [ ] Tier 1 elements are present and above the first `---` or `## ` heading
 - [ ] Tier 1 is compact (~250px height; additional brief elements are fine as long as they don't break compactness)
 - [ ] Tier 2 sections exist: at minimum "Why" (or "The Problem") + "Quick Start" (or "Usage") + "Install"
-- [ ] Tier 3 reference sections use `<details>` collapsible blocks
+- [ ] No `<details>` used as section containers. Zero. (Section-internal variants like "Other install methods" are also not collapsed — show inline or move to `docs/`)
+- [ ] All sections that pass the Checkout Test (Why, Features, Quick Start, Install primary, When to Use, Prerequisites, License) are inline — not moved to `docs/`
+- [ ] Sections that fail the Checkout Test and exceed ~15 lines are in `docs/` with a substantive teaser (1-3 sentences + link), not left as walls of text in README
 - [ ] No Tier 3 content is placed in the Tier 1 or Tier 2 area
 
-## Content (12)
+## Content (13)
 
 - [ ] One-liner is a value proposition, not a technical description
 - [ ] "Why" section describes a specific pain point, not generic motivation
@@ -22,10 +24,11 @@ Run this checklist before delivering any README. Report failures to the user.
 - [ ] Features list is written as user-facing capabilities ("detects leaked API keys"), not internal mechanisms ("runs regex scan on staged files"). 3-6 items for focused projects, 7-10 for feature-rich projects. Most innovative capabilities listed first. **Dedup**: if this check and the Reader Lens checks (RL3 innovation ordering, RL4 no mechanism) flag the same bullet for the same root cause, report as one issue
 - [ ] **Skill projects** (has `SKILL.md`): Features comprehensively cover the skill's capability surface. Use SKILL.md body as ground truth — inventory every user-facing capability (validation checks, workflow steps, patterns, publish features) and confirm each appears in README Features, either as its own bullet or clearly covered within another. Report missing capabilities as gaps. This is a lightweight single-file comparison, not a full codebase audit
 - [ ] **General projects**: Features list covers the project's major capabilities. readme-craft checks for obvious omissions based on what it already read during the scan (entry points, exports, CLI commands) — but comprehensive capability auditing is the repo maintainer's responsibility, not readme-craft's
-- [ ] How It Works / internal mechanism details are in Tier 3 (collapsible), not in Tier 2 Features. **Dedup**: if this check and the Features-language check (#5 above) both flag the same section for the same root cause, report them as one issue, not two
+- [ ] How It Works / internal mechanism details are in Tier 3 (below Tier 2), not mixed into Tier 2 Features. **Dedup**: if this check and the Features-language check (#5 above) both flag the same section for the same root cause, report them as one issue, not two
 - [ ] Example sections are labeled as sample flows unless they come from a verified run
-- [ ] No section exceeds one screen of content without folding or linking
-- [ ] If the README is too long for one file, deep reference material is split to `docs/` or separate markdown files with relative links
+- [ ] No section exceeds one screen of content without splitting to `docs/` or linking
+- [ ] Non-decision content that exceeds ~15 lines is in `docs/` with a teaser link, not bloating the README
+- [ ] Teaser links are substantive (1-3 sentences summarizing what the reader will find), not placeholder text ("learn more", "see docs")
 
 ## Formatting (10)
 
@@ -45,7 +48,7 @@ Run this checklist before delivering any README. Report failures to the user.
 - [ ] **Self-selection** — A reader can tell within 10 seconds whether they are the target user. Look for a qualifying statement: "If [your situation], this is for you." The Problem section or one-liner should let visitors self-select in or out, not just describe an abstract pain point
 - [ ] **When to reach for it** — README explains what situation, workflow stage, or trigger should make a reader think of this project. If there's a timing constraint ("use after X, not during Y"), it's stated explicitly
 - [ ] **Audience segmentation** — If multiple user segments exist (e.g., new users vs power users, different use cases), key sections address them distinctly rather than blending into one generic narrative
-- [ ] **Not-for boundary** — README clarifies what the project is NOT for, who should look elsewhere, or what problems it deliberately does not solve. Implicit signals count: a "When to Use" table with explicit "No" rows, a Positioning section with "does not" statements (even if collapsed), or a one-liner that inherently excludes non-target users. Only flag when none of these exist
+- [ ] **Not-for boundary** — README clarifies what the project is NOT for, who should look elsewhere, or what problems it deliberately does not solve. Implicit signals count: a "When to Use" table with explicit "No" rows, a Positioning section with "does not" statements, or a one-liner that inherently excludes non-target users. Only flag when none of these exist
 - [ ] **30-second test** — A first-time visitor can determine within 30 seconds: (1) am I the target user, (2) does this solve my current problem, (3) what do I do next
 
 ## Completeness (5)
@@ -55,6 +58,7 @@ Run this checklist before delivering any README. Report failures to the user.
 - [ ] Install, docs, and release links resolve or are clearly marked as pending
 - [ ] At least one usage example beyond Quick Start
 - [ ] Skill footer is present: `Crafted with [Readme Craft](...)` (prepend `Forged with [Skill Forge](...) ·` if generated through skill-forge's pipeline)
+- [ ] GitHub metadata: `.github/repo-meta.yml` exists with description (≤350 chars, aligned with README one-liner) and 8-20 topics following 3-tier system (`references/github-metadata.md`)
 
 ## Reader Lens (4)
 

@@ -1,6 +1,8 @@
 # Case Study: Skill Forge README
 
-A before/after analysis of applying [readme-craft](https://github.com/motiful/readme-craft)'s 3-tier layout strategy and Quality Checklist to the Skill Forge README. The raw version represents a typical first-draft README with no visual hierarchy. The after version demonstrates a fully structured, GitHub-native layout scoring 35/35 on the checklist.
+> **Methodology note (2026-03-24):** This case study was written under readme-craft v1.0, which used `<details>` collapsible blocks for Tier 3 content. The current methodology replaces `<details>` with the **Checkout Test**: sections that pass (removal reduces clone likelihood) stay inline; sections that fail move to `docs/` with a substantive teaser link. The Tier 1 and Tier 2 analysis below remains valid. Tier 3 evaluation criteria and some scoring details reflect the older approach. A future revision will re-evaluate using the current 44-point checklist.
+
+A before/after analysis of applying [readme-craft](https://github.com/motiful/readme-craft)'s 3-tier layout strategy and Quality Checklist to the Skill Forge README. The raw version represents a typical first-draft README with no visual hierarchy. The after version demonstrates a fully structured, GitHub-native layout.
 
 - **Before**: [`skill-forge-raw.md`](skill-forge-raw.md) -- beginner-style flat README
 - **After**: [`skill-forge/README.md`](https://github.com/motiful/skill-forge/blob/main/README.md) -- full 3-tier layout (v4.0)

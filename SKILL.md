@@ -117,7 +117,23 @@ After the structural checklist passes, re-read the entire README as a stranger w
 
 Run the Reader Lens checks (dimension 6 in the Quality Checklist). These checks require a mindset shift: stop thinking about whether elements are present and start thinking about whether they *land*.
 
-### Step 7: Deliver
+### Step 7: GitHub Metadata
+
+Create or update the GitHub repository metadata (description, topics) for discoverability.
+
+1. Check if `.github/repo-meta.yml` exists
+2. If not, create it:
+   - Derive description from the README one-liner (Tier 1 value proposition), trimmed to 350 chars
+   - For skill projects: cross-check alignment with SKILL.md `description` field
+   - Detect project domain and apply Tier 1 tags (high-traffic)
+   - Research and propose Tier 2 candidates (domain-specific). Present to user for confirmation
+   - Detect Tier 3 tags from ecosystem signals (platform, framework)
+3. If it exists, validate: description ≤ 350 chars, 8-20 topics, topic format `^[a-z0-9][a-z0-9-]*$`
+4. Apply via `gh repo edit` (only when publishing — skip for local-only projects)
+
+Full specification: `references/github-metadata.md`
+
+### Step 8: Deliver
 
 1. Add the skill footer: `Crafted with [Readme Craft](https://github.com/motiful/readme-craft)`. If the README was also generated through skill-forge's pipeline, prepend `Forged with [Skill Forge](https://github.com/motiful/skill-forge) ·` before the readme-craft credit.
 2. Remove any sections the user explicitly says are not needed.
@@ -452,7 +468,7 @@ When including an Example section in a README:
 
 Run the checklist in `references/quality-checklist.md` before delivering any README. Report failures to the user.
 
-The checklist covers 6 dimensions: Structure (7), Content (13), Formatting (10), User Perspective (5), Completeness (5), Reader Lens (4) — 44 checks total. Dimensions 1-5 are structural; dimension 6 requires a mindset shift to first-time reader perspective.
+The checklist covers 6 dimensions: Structure (7), Content (13), Formatting (10), User Perspective (5), Completeness (6), Reader Lens (4) — 45 checks total. Dimensions 1-5 are structural; dimension 6 requires a mindset shift to first-time reader perspective.
 
 ---
 
@@ -471,6 +487,7 @@ This skill uses the following template and analysis files:
 | `references/quality-checklist.md` | 44-point quality checklist across 6 dimensions: structure, content, formatting, user perspective, completeness, reader lens. |
 | `references/gradient-palettes.md` | 2026-curated gradient palette reference with 45 named gradients for logo and badge color selection. |
 | `references/comparison-screenshots.md` | Before/after comparison PNG generation via Playwright for README case studies. |
+| `references/github-metadata.md` | GitHub repository metadata: About/description rules (≤350 chars), topic 3-tier selection, `.github/repo-meta.yml` format, `gh repo edit` workflow. |
 | `docs/logo-gallery.md` | Visual gallery of all logo presets with rendered SVG previews, palette table, and selection guidance. |
 
 When generating a README, always start from the appropriate asset template file. Read it, fill its placeholders, then adjust sections based on the project's needs.

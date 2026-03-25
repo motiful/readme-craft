@@ -127,33 +127,21 @@ flowchart TD
 npx skills add <org>/<skill-name>
 ```
 
-<details>
-<summary>Manual registration</summary>
+<!-- If manual registration is short (< ~15 lines), show inline.
+     If long, move to docs/install.md with a teaser link. -->
+
+**Manual registration** (clone + symlink):
 
 ```bash
 git clone https://github.com/<org>/<skill-name> ~/skills/<skill-name>
 
-# Pick only the roots you actually use.
-# You do not need to register every platform.
-# If a root does not exist yet, create it only intentionally.
-
-# Claude Code
-ln -sfn ~/skills/<skill-name> ~/.claude/skills/<skill-name>
-
-# Codex
-ln -sfn ~/skills/<skill-name> ~/.agents/skills/<skill-name>
-
-# VS Code / GitHub Copilot
-ln -sfn ~/skills/<skill-name> ~/.copilot/skills/<skill-name>
-
-# Cursor (if your setup ignores the symlink, use a real copy instead)
-ln -sfn ~/skills/<skill-name> ~/.cursor/skills/<skill-name>
-
-# Windsurf
-ln -sfn ~/skills/<skill-name> ~/.codeium/windsurf/skills/<skill-name>
+# Register only in roots you actually use.
+ln -sfn ~/skills/<skill-name> ~/.claude/skills/<skill-name>      # Claude Code
+ln -sfn ~/skills/<skill-name> ~/.agents/skills/<skill-name>      # Codex
+ln -sfn ~/skills/<skill-name> ~/.copilot/skills/<skill-name>     # VS Code / GitHub Copilot
+ln -sfn ~/skills/<skill-name> ~/.cursor/skills/<skill-name>      # Cursor
+ln -sfn ~/skills/<skill-name> ~/.codeium/windsurf/skills/<skill-name>  # Windsurf
 ```
-
-</details>
 
 ## Works Better With
 
@@ -174,20 +162,24 @@ This skill still works fully on its own.
 ---
 
 <!-- ============================================================ -->
-<!-- TIER 3: REFERENCE — Serve committed users                    -->
+<!-- TIER 3: SUPPORTING CONTENT — Serve committed users            -->
+<!-- Non-decision sections: teaser + docs/ link.                   -->
+<!-- Short sections (< ~15 lines): keep inline.                    -->
+<!-- No <details>. If it's worth including, show it.               -->
+<!-- HITL: propose moves to user before executing.                 -->
 <!-- ============================================================ -->
 
-<details>
-<summary><strong>How It Works</strong></summary>
+## How It Works
 
-<Internal mechanism, pipeline stages, or architecture.
-This is where workflow diagrams, step-by-step internal logic, and technical details belong.
-Keep Tier 2 Features focused on what the user gets; put the "how" here.>
+<!-- Short (< ~15 lines) → keep inline. Long → teaser + docs/ link. -->
 
-</details>
+<1-3 sentence summary of internal mechanism or architecture.>
 
-<details>
-<summary><strong>What's Inside</strong></summary>
+→ [Detailed architecture](docs/how-it-works.md)
+
+## What's Inside
+
+<!-- Usually short enough to inline for skill projects. -->
 
 ```text
 SKILL.md              — <short description>
@@ -196,19 +188,6 @@ references/           — <if applicable>
 scripts/              — <if applicable>
   <file>.<ext>        — <what it does>
 ```
-
-</details>
-
-<details>
-<summary><strong>Configuration</strong></summary>
-
-<If the skill has configurable behavior, document it here.>
-
-| Option | Default | Description |
-|--------|---------|-------------|
-| <option> | <default> | <description> |
-
-</details>
 
 ## Contributing
 
