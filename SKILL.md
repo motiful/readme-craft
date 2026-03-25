@@ -48,7 +48,7 @@ Node.js not available → error: logo generation requires Node.js 18+. Install N
 Scan the project to understand current state:
 
 - Check for existing README
-- Check for existing logo files (`logo-light.svg`, `logo-dark.svg`, `logo.svg`, `logo.png`)
+- Check for existing logo files in `.github/` first, then repo root (`logo-light.svg`, `logo-dark.svg`, `logo.svg`, `logo.png`). Canonical location: `.github/` (per skill-forge asset placement rules)
 - Read `package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `SKILL.md` frontmatter, or equivalent for name, version, description, license, dependencies
 - Read existing docs (`CONTRIBUTING.md`, `CHANGELOG.md`, `LICENSE`) if present
 - Read the entry point and key source files to understand what the project does
@@ -90,7 +90,7 @@ Record findings as project state: `{has_readme, has_logo, has_codebase, has_skil
   1. Run `node scripts/generate-logo.mjs --candidates 5 --name "<project>" --out-dir <tmpdir>/logo-candidates/`
   2. Present absolute file paths to user for preview
   3. Wait for user to pick one (or ask for more candidates / a specific preset)
-  4. Copy selected SVG to `logo-light.svg` and generate dark variant
+  4. Copy selected SVG to `.github/logo-light.svg` and generate dark variant as `.github/logo-dark.svg`
   5. If the generated mark already spells the project name clearly, do not stack a second `<h1>` underneath it
 
 For preset selection rules, see `references/logo-generation.md`. For a visual gallery of all presets, see `docs/logo-gallery.md`.
@@ -131,11 +131,11 @@ A README is a storefront, not a documentation site. In the Diátaxis framework (
 
 - **Explanation** → Why / The Problem
 - **How-to** → Quick Start, Install, Usage
-- **Reference** → Tier 3 collapsibles
+- **Reference** → Tier 3 supporting content (inline or linked to `docs/`)
 
 But a README has a mission that none of the four types cover: **convince**. The Features section exists to sell — to make a reader believe this project is worth their time in the fewest possible words. Features answer "what do I get?", not "how does it work internally?" or "why was it designed this way?"
 
-The structural principle behind the 3-tier system is **progressive disclosure**: reveal only what each visitor needs at their current level of commitment. Tier 1 is for the uncommitted (pitch), Tier 2 is for the evaluating (proof), Tier 3 is for the committed (reference). Every placement decision — "does this belong above the fold or in a collapsible?" — is a progressive disclosure decision.
+The structural principle behind the 3-tier system is **progressive disclosure**: reveal only what each visitor needs at their current level of commitment. Tier 1 is for the uncommitted (pitch), Tier 2 is for the evaluating (proof), Tier 3 is for the committed (reference). Every placement decision — "does this belong above the fold or at the bottom?" — is a progressive disclosure decision. Scrolling is the disclosure mechanism, not collapsing.
 
 | Concept | Question it answers | Example |
 |---------|-------------------|---------|
@@ -151,7 +151,7 @@ When Features and How It Works are mixed together, the README writes out a pipel
 
 This is the primary differentiator of readme-craft. Every README must organize content into three tiers based on how visitors consume information.
 
-This strategy is optimized for **GitHub** README rendering. Elements like `<picture>`, `<details>`, and similar GitHub-specific patterns may not render on other platforms (GitLab, npm, crates.io). Adapt as needed.
+This strategy is optimized for **GitHub** README rendering. Elements like `<picture>` and similar GitHub-specific patterns may not render on other platforms (GitLab, npm, crates.io). Adapt as needed.
 
 ### Tier 1: Above the Fold (~250px)
 
@@ -179,9 +179,9 @@ Additional brief elements (a platform compatibility line, a short tagline, a sma
 ```html
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="logo-light.svg">
-    <img alt="project-name" src="logo-light.svg" width="120">
+    <source media="(prefers-color-scheme: dark)" srcset=".github/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/logo-light.svg">
+    <img alt="project-name" src=".github/logo-light.svg" width="120">
   </picture>
 
   <h1>project-name</h1>
@@ -210,9 +210,9 @@ When a wide wordmark (400-500px) serves as both logo and project name, the stand
 ```html
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="logo-light.svg">
-    <img alt="project-name" src="logo-light.svg" width="440">
+    <source media="(prefers-color-scheme: dark)" srcset=".github/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/logo-light.svg">
+    <img alt="project-name" src=".github/logo-light.svg" width="440">
   </picture>
 </div>
 
@@ -238,39 +238,76 @@ The next 2-3 screens. A visitor who passed Tier 1 wants to evaluate whether this
    - **Comprehensiveness check:** Read through all source files, reference docs, and config to inventory every user-facing capability. Then confirm every major capability appears in the Features list — either as its own item or clearly covered within another item.
 3. **When to Use** — include for tools and skills. Skip ONLY when: the Usage section already covers activation context. Clarify what situation should prompt the reader to reach for this project. If there's a specific activation model ("use after X, not during Y") or a "not for" boundary, state it here. Can be combined into Usage if short.
 4. **Quick Start** — the fastest path to a working example. 1-3 commands + minimal code (5-15 lines).
-5. **Install** — full installation instructions. Multiple package managers if applicable. Use `<details>` for alternative methods.
-6. **Usage** — basic example + 1-2 common use cases. Use `<details>` for advanced examples.
+5. **Install** — primary installation method inline. Alternative methods: short → inline below primary; long → `docs/install-alternatives.md` with teaser.
+6. **Usage** — basic example + 1-2 common use cases. Advanced examples: short → inline; long → `docs/` with teaser.
 
 **Rules:**
 - Each section must fit on one screen or less.
 - Use code blocks aggressively — they scan faster than prose.
 - Bullet lists over paragraphs.
-- If a section exceeds one screen, move detail into a linked doc or collapsible block.
+- If a section exceeds one screen, move detail into a linked doc (`docs/`).
 
 For AI agent skills, "Usage" (trigger phrases) may come before "Install" to prioritize understanding over commitment. The skill template reflects this ordering.
 
-### Tier 3: Reference (Collapsible)
+### Tier 3: Supporting Content
 
-Reference material for committed users. Wrap each section in `<details><summary>`.
+Sections below Tier 2 that serve committed users. Position at the bottom of README provides natural progressive disclosure — **scrolling is the disclosure mechanism**, not collapsing.
 
-**Sections (include if the project has content for this section. Omit only when no content exists — not because it "seems unnecessary"):**
+**The Checkout Test — the operational criterion for every section:**
 
-- **How It Works** — internal mechanism, pipeline stages, architecture, data flow. This is where workflow diagrams, step-by-step internal logic, and technical details belong. Features (Tier 2) tells the user what they get; this section explains how it happens under the hood.
-- **Prerequisites** — runtime versions, system dependencies. Table format.
-- **Configuration** — config file options, environment variables. Table format.
-- **API Reference** — brief overview + link to full docs.
-- **Project Structure** — ASCII tree, top 2-3 levels with inline comments.
-- **Development** — clone, install, test, lint, build commands.
-- **Roadmap** — checkbox list of planned features.
-- **Contributing** — inline or link to CONTRIBUTING.md.
-- **Changelog** — link to CHANGELOG.md.
-- **Acknowledgments** — credits.
-- **License** — short text + link to LICENSE file.
+> If this section disappeared from the README, would a potential user be **less likely** to `git clone` or `npm install` the project?
+>
+> - **Yes** → keeps the section inline in README
+> - **No** → section moves to `docs/` with a teaser link
+
+Three content types pass the Checkout Test:
+
+1. **Feasibility gates** — "Can I use this?" (Prerequisites, primary Install, License)
+2. **Value proposition** — "Should I use this?" (Why, Features, Quick Start, When to Use)
+3. **Trust signals** — "Can I trust this?" (Badges, social proof)
+
+Everything else is post-decision content: "how to use it better" or "how it works internally." Removing it would not change whether someone tries the project.
+
+**Section-by-section reference:**
+
+| Section | Passes Checkout Test? | Category | Placement |
+|---------|:---:|------|-----------|
+| Why / Problem | Yes | Value proposition | Tier 2 inline |
+| Features | Yes | Value proposition | Tier 2 inline |
+| Quick Start | Yes | Value proposition | Tier 2 inline |
+| When to Use / Not-for | Yes | Value proposition | Tier 2 inline |
+| Install (primary) | Yes | Feasibility gate | Tier 2 inline |
+| Prerequisites | Yes | Feasibility gate | inline |
+| License | Yes | Feasibility gate | inline |
+| Install (alternatives) | No | Post-decision (exploring options) | teaser + `docs/` |
+| How It Works | No | Post-decision (curiosity) | teaser + `docs/` |
+| Configuration (full) | No | Post-decision ("configurable" helps; full table doesn't) | teaser + `docs/` |
+| API Reference | No | Post-decision | teaser + `docs/` |
+| Project Structure | No | Post-decision (contributor info) | teaser + `docs/` |
+| Development | No | Post-decision (contributor info) | teaser + `docs/` |
+| Contributing | No | Post-decision (contributor info) | inline or CONTRIBUTING.md |
+| Changelog / Roadmap | No | Post-decision (existing users) | teaser + `docs/` or link |
+| Acknowledgments | No | Post-decision (courtesy, usually very short) | inline |
+
+**No `<details>`.** Zero. If content is worth including, show it inline. If it's too long for README, move it to `docs/` as a complete, self-contained document. No folding, no collapsing.
+
+**Teaser + link pattern** — substantive summary, not "learn more":
+
+```markdown
+## How It Works
+
+skill-forge validates structure, security, and claims in a single pass
+by reading every file in your skill repo.
+
+→ [Architecture deep dive](docs/how-it-works.md)
+```
+
+**HITL:** readme-craft proposes moves ("suggest moving How It Works to `docs/how-it-works.md`"). The user confirms before execution. Never auto-move content out of README.
 
 **Rules:**
-- Always use `<details><summary>` for Tier 3 sections (except License and Contributing, which may be open).
-- Link to separate files for content > 1 screen.
-- Contributing may be inline or linked. Prefer a separate `CONTRIBUTING.md` for mature or public repos.
+- Non-decision sections → `docs/` with teaser. Exception: very short sections (< 5 lines, e.g., Acknowledgments, License) stay inline.
+- Teaser = 1-3 substantive sentences + `→ [Title](docs/X.md)` link. The teaser IS the summary for anyone who doesn't click.
+- Contributing: inline or CONTRIBUTING.md — not `docs/`.
 - Add a back-to-top link for READMEs exceeding 300 lines.
 - Use reference-style link definitions at the bottom of the file for badge URLs.
 
@@ -318,15 +355,16 @@ GitHub supports theme-aware images via the `<picture>` element. Always include t
 
 ```html
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="logo-light.svg">
-  <img alt="project-name" src="logo-light.svg" width="120">
+  <source media="(prefers-color-scheme: dark)" srcset=".github/logo-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset=".github/logo-light.svg">
+  <img alt="project-name" src=".github/logo-light.svg" width="120">
 </picture>
 ```
 
 **Rules:**
 - Prefer SVG for logos (scales cleanly, small file size).
 - The `<img>` fallback uses the light variant (GitHub default theme).
+- Store logos in `.github/` (per skill-forge asset placement convention: logo and screenshots are repo infrastructure, not skill runtime content).
 - If the project only has one logo, use the same path for both `srcset` values and the `src` — still include the `<picture>` wrapper so a dark variant can be added later without restructuring.
 - Width 80-120px for inline logos (icon/symbol marks). Wordmark logos (text-rendered SVGs like figlet/cfonts output) may use 400-500px width since they serve as both logo and project name. Never use full-width banners in Tier 1.
 - If no logo exists yet, generate one (see Step 4). Every delivered README includes a logo.
@@ -352,9 +390,9 @@ For syntax patterns and deeper rules, see `references/github-formatting.md`.
 **Default patterns:**
 
 - Relative links for `docs/`, sibling markdown files, and split reference material
-- `<details><summary>` for Tier 3 or overflow content
+- Teaser + `docs/` link for long non-decision content
 - Tables for structured data
-- Minimal HTML where Markdown is not enough
+- Minimal HTML where Markdown is not enough (e.g., `<picture>` for dark/light logos)
 
 **Optional patterns:**
 
@@ -366,11 +404,23 @@ For syntax patterns and deeper rules, see `references/github-formatting.md`.
 
 **Rules:**
 
-- Do not hide the core onboarding path inside collapsed sections.
+- Do not move decision-making content (Tier 2 sections) to `docs/` — it must stay inline.
 - Use relative links when splitting a long README into `docs/` or separate markdown files.
 - Add diagrams only when they explain faster than prose.
 - Add social proof only when the repo is public, the numbers are real, and the user wants it.
 - Prefer clarity over visual novelty.
+
+---
+
+## docs/ Content Standard
+
+`docs/` exists to serve README. When a non-decision section is moved out of README, the full content goes to a `docs/` file. readme-craft creates these files as part of README improvement — it does not manage or reorganize existing project documentation.
+
+**Boundary:** `docs/` is a human-facing layer. It must NOT be referenced by SKILL.md, `references/`, or any agent-facing instruction file. For skill repos: agent-relevant content belongs in SKILL.md + `references/`; `docs/` is for humans who want depth beyond what README shows.
+
+**Naming:** kebab-case by topic (`how-it-works.md`, `configuration.md`). Keep `docs/` flat. Every file should be self-contained — readable without the README.
+
+**Scale:** Most small projects need 0 docs. Don't create `docs/` preemptively. Only create files when moving content out of README. If a project has no non-decision sections longer than ~15 lines, it doesn't need `docs/`.
 
 ---
 
@@ -402,7 +452,7 @@ When including an Example section in a README:
 
 Run the checklist in `references/quality-checklist.md` before delivering any README. Report failures to the user.
 
-The checklist covers 6 dimensions: Structure (5), Content (12), Formatting (10), User Perspective (5), Completeness (5), Reader Lens (4). Dimensions 1-5 are structural; dimension 6 requires a mindset shift to first-time reader perspective.
+The checklist covers 6 dimensions: Structure (7), Content (13), Formatting (10), User Perspective (5), Completeness (5), Reader Lens (4) — 44 checks total. Dimensions 1-5 are structural; dimension 6 requires a mindset shift to first-time reader perspective.
 
 ---
 
@@ -418,7 +468,7 @@ This skill uses the following template and analysis files:
 | `references/github-formatting.md` | GitHub-native formatting patterns, overflow strategy, and rules for diagrams, footnotes, math, task lists, and social proof. |
 | `references/logo-generation.md` | README fallback logo guidance: positioning, preset selection, runtime requirements, and when to use the local wordmark generator. |
 | `references/logo-examples.md` | Short example mappings from project feel to recommended logo presets. |
-| `references/quality-checklist.md` | 41-point quality checklist across 6 dimensions: structure, content, formatting, user perspective, completeness, reader lens. |
+| `references/quality-checklist.md` | 44-point quality checklist across 6 dimensions: structure, content, formatting, user perspective, completeness, reader lens. |
 | `references/gradient-palettes.md` | 2026-curated gradient palette reference with 45 named gradients for logo and badge color selection. |
 | `references/comparison-screenshots.md` | Before/after comparison PNG generation via Playwright for README case studies. |
 | `docs/logo-gallery.md` | Visual gallery of all logo presets with rendered SVG previews, palette table, and selection guidance. |
