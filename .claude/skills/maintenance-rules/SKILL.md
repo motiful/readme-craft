@@ -26,6 +26,7 @@ if change proposed:
 - MUST NOT push SKILL.md body over 500 lines (currently 487)
 - MUST keep quality checklist item count consistent across: SKILL.md body, `references/quality-checklist.md`, README features, `docs/case-study-skill-forge.md` scoring tables. When checklist changes, update all four
 - MUST regenerate `docs/` images when the content they illustrate changes. Specifically: `docs/skill-forge-comparison.png` must match `docs/case-study-skill-forge.md` — regenerate via `node scripts/generate-comparison.mjs` when the case study's Before or After source changes
+- MUST use the After markdown from its original repo location when generating comparison screenshots — `resolveLocalPaths` resolves `src`/`srcset` relative to the markdown file's directory. Copying to `/tmp/` breaks image resolution (e.g., `.github/logo-dark.svg` becomes `/tmp/.github/logo-dark.svg`). Correct: `--after /path/to/original/repo/README.md`
 - MUST keep templates (`assets/universal-readme.md`, `assets/skill-readme.md`) aligned with current methodology. When SKILL.md rules change (e.g., section ordering, `<details>` policy, Checkout Test criteria), update templates to match
 - MUST keep SKILL.md ↔ README ↔ references terminology consistent
 - MUST add References table entry when adding new reference files

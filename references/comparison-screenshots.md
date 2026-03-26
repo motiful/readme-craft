@@ -71,6 +71,17 @@ node scripts/generate-comparison.mjs \
   --output docs/<project>-comparison-full.png --mode stacked
 ```
 
+## Image Path Resolution
+
+The comparison renderer resolves relative `src` and `srcset` paths using the markdown file's parent directory as `baseDir`. This means:
+
+- **Always use the After markdown from its original repo** — if the After README references `.github/logo.svg`, the file must exist relative to the markdown's location
+- **Never copy the After to `/tmp/` or another directory** — relative image paths will break (e.g., `.github/logo-dark.svg` resolves to `/tmp/.github/logo-dark.svg`)
+- **The Before file can be anywhere** — raw READMEs typically have no image references
+
+Correct: `--after /path/to/original/repo/README.md`
+Wrong: `--after /tmp/copied-readme.md`
+
 ## File Naming & Placement
 
 - **Output to `docs/`**, not `examples/` (comparison images support documentation, not showcase).
