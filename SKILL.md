@@ -74,13 +74,18 @@ def readme_craft(project_path, user_request):
 
     # STEP 7: GitHub Metadata
     validate_or_create_metadata(state)                         # references/github-metadata.md
-    # .github/repo-meta.yml: description ≤ 350 chars, 8-20 topics
-    # gh repo edit only when publishing, not local-only
+    assert metadata_file_valid(state)                          # GATE — .github/repo-meta.yml must exist with valid description + topics
+    if state.has_git_remote:
+        apply_metadata_to_remote(state)                        # gh repo edit --description + --add-topic
 
     # STEP 8: Deliver
     readme = add_footer(readme, state)                         # "Crafted with Readme Craft"
     readme = remove_sections_user_declined(readme)
     present_final(readme)
+
+    # STEP 9: Comparison (when improving an existing README)
+    if state.has_readme and state.original_readme:
+        generate_comparison(state.original_readme, readme)     # references/comparison-screenshots.md
 ```
 
 ---
