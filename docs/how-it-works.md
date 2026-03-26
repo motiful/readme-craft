@@ -6,7 +6,7 @@
 
 **Mode B: Create from Codebase** — Scans the project for package configs, entry points, CI config, and existing docs. Synthesizes findings into a complete README using the detected ecosystem.
 
-**Mode C: Improve Existing** — Evaluates an existing README against the 3-tier strategy and 44-point quality checklist. Produces a numbered improvement plan, then applies changes while preserving the author's voice.
+**Mode C: Improve Existing** — Evaluates an existing README against the 3-tier strategy and 45-point quality checklist. Produces a numbered improvement plan, then applies changes while preserving the author's voice.
 
 ## The 3-Tier Layout Strategy
 

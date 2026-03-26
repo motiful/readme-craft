@@ -3,7 +3,7 @@
   "count": 9,
   "items": [
     {
-      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-figlet-dos-rebel-inline.svg",
+      "outputPath": "readme-craft-figlet-dos-rebel-inline.svg",
       "presetKey": "figlet-dos-rebel-inline",
       "paletteKey": "ocean",
       "label": "DOS Rebel Inline",
@@ -13,7 +13,7 @@
       "name": "readme-craft"
     },
     {
-      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-figlet-dos-rebel-main.svg",
+      "outputPath": "readme-craft-figlet-dos-rebel-main.svg",
       "presetKey": "figlet-dos-rebel-main",
       "paletteKey": "solar-flare",
       "label": "DOS Rebel Main",
@@ -23,7 +23,7 @@
       "name": "readme-craft"
     },
     {
-      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-figlet-ansi-shadow-sharp.svg",
+      "outputPath": "readme-craft-figlet-ansi-shadow-sharp.svg",
       "presetKey": "figlet-ansi-shadow-sharp",
       "paletteKey": "synthwave",
       "label": "ANSI Shadow Sharp",
@@ -33,7 +33,7 @@
       "name": "readme-craft"
     },
     {
-      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-cfonts-block-compact.svg",
+      "outputPath": "readme-craft-cfonts-block-compact.svg",
       "presetKey": "cfonts-block-compact",
       "paletteKey": "arctic",
       "label": "Block Compact",
@@ -43,7 +43,7 @@
       "name": "readme-craft"
     },
     {
-      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/skill-forge-cfonts-shade-crisp.svg",
+      "outputPath": "skill-forge-cfonts-shade-crisp.svg",
       "presetKey": "cfonts-shade-crisp",
       "paletteKey": "voltage",
       "label": "Shade Crisp",
@@ -53,7 +53,7 @@
       "name": "skill-forge"
     },
     {
-      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/repo-scaffold-cfonts-tiny-tall.svg",
+      "outputPath": "repo-scaffold-cfonts-tiny-tall.svg",
       "presetKey": "cfonts-tiny-tall",
       "paletteKey": "plasma",
       "label": "Tiny Tall",
@@ -63,7 +63,7 @@
       "name": "repo-scaffold"
     },
     {
-      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-cfonts-simpleblock-slim.svg",
+      "outputPath": "readme-craft-cfonts-simpleblock-slim.svg",
       "presetKey": "cfonts-simpleblock-slim",
       "paletteKey": "ultraviolet",
       "label": "SimpleBlock Slim",
@@ -73,7 +73,7 @@
       "name": "readme-craft"
     },
     {
-      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-cfonts-shade-default.svg",
+      "outputPath": "readme-craft-cfonts-shade-default.svg",
       "presetKey": "cfonts-shade-default",
       "paletteKey": "forest",
       "label": "Shade Default",
@@ -83,7 +83,7 @@
       "name": "readme-craft"
     },
     {
-      "outputPath": "/Users/yuhaolu/motifpool/readme-craft/examples/logos/readme-craft-cfonts-console-neutral.svg",
+      "outputPath": "readme-craft-cfonts-console-neutral.svg",
       "presetKey": "cfonts-console-neutral",
       "paletteKey": "midnight",
       "label": "Console Neutral",

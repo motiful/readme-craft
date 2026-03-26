@@ -18,6 +18,16 @@ for each example: project_feel → preset + palette + rationale
 anti-patterns: random alternatives, decorative frames, treating wordmarks as brand systems
 ```
 
+## TOC
+
+- [Example 1](#example-1) — Infra / terminal
+- [Example 2](#example-2) — Developer tool
+- [Example 3](#example-3) — Experimental / small utility
+- [Example 4](#example-4) — Polished / darker palette
+- [Example 5](#example-5) — Safe default
+- [Example 6](#example-6) — Multiple options
+- [Anti-Patterns](#anti-patterns)
+
 ## Example 1
 
 Project feel:

@@ -14,10 +14,26 @@ generate_logo(project_name, options) → svg_files
 
 check: Node.js 18+, npm dependencies installed
 select_preset: project category → engine + font + layout (see logo-examples.md)
+select_palette: project aesthetic → gradient palette (references/gradient-palettes.md)
 generate: run scripts/generate-logo.mjs with --candidates N
 present: absolute file paths to user for HITL selection
 output: copy selected to .github/logo-light.svg, generate dark variant as .github/logo-dark.svg
 ```
+
+## TOC
+
+- [Positioning](#positioning)
+- [One Script, Two Engines](#one-script-two-engines)
+- [Requirements](#requirements)
+- [Front Matter](#front-matter)
+- [Core Aesthetic Conclusions](#core-aesthetic-conclusions)
+- [Recommended Presets](#recommended-presets)
+- [Selection Logic](#selection-logic)
+- [Candidate Cleanup](#candidate-cleanup)
+- [Header Presentation Rule](#header-presentation-rule)
+- [Execution Policy](#execution-policy)
+- [Output Rules](#output-rules)
+- [What Does Not Need More Work](#what-does-not-need-more-work)
 
 ## Positioning
 

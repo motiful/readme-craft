@@ -17,6 +17,14 @@ optional: Mermaid (architecture), footnotes (citations), math (formulas), task l
 reject: <details> — always. Inline or move to docs/
 ```
 
+## TOC
+
+- [Default Tools](#default-tools)
+- [Optional Tools](#optional-tools)
+- [Decision Rules](#decision-rules)
+- [Overflow Strategy](#overflow-strategy)
+- [Official GitHub Coverage](#official-github-coverage)
+
 ## Default Tools
 
 - Relative links for docs split across `README.md`, `docs/`, and sibling markdown files

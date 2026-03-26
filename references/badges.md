@@ -21,6 +21,18 @@ format: reference-style links at bottom of README
 
 ---
 
+## TOC
+
+- [License](#license)
+- [Version / Release](#version--release)
+- [Build / CI](#build--ci)
+- [Downloads](#downloads)
+- [Coverage](#coverage)
+- [Platform / Language](#platform--language)
+- [Agent Skills](#agent-skills)
+- [Social / Community](#social--community)
+- [Tips](#tips)
+
 ## License
 
 | License | Badge |

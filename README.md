@@ -1,9 +1,9 @@
 <div align="center">
 
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="logo-light.svg">
-    <img alt="readme-craft" src="logo-light.svg" width="440">
+    <source media="(prefers-color-scheme: dark)" srcset=".github/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/logo-light.svg">
+    <img alt="readme-craft" src=".github/logo-light.svg" width="440">
   </picture>
 
 </div>
@@ -61,13 +61,14 @@ readme-craft focuses on the final reading experience: a **3-tier layout strategy
 **Features:**
 
 - **Organizes by how readers scan, not what you want to say** — the 3-tier layout strategy puts the pitch above the fold, proof in the scan zone, and supporting content as teasers linking to `docs/`
-- **44-point quality audit** — evaluates structure, content, formatting, user perspective, completeness, and reader lens with specific pass/fail criteria for each
+- **45-point quality audit** — evaluates structure, content, formatting, user perspective, completeness, and reader lens with specific pass/fail criteria for each
 - **Separates Features from How It Works** — prevents the common anti-pattern of writing pipeline stages where user-facing capabilities should go; inventories all capabilities before writing
 - **Generates dark/light SVG wordmarks** — 9 presets across 2 rendering engines (figlet + cfonts), 45 named gradient palettes, human-in-the-loop candidate selection
 - **Selects badges by priority** — 6-level priority system (license → version → CI → downloads → coverage → platform) with copy-paste patterns for every ecosystem
 - **Enforces tone and voice** — addresses the reader as "you", uses third person for the software, strips hype words; in improvement mode, preserves the author's existing voice
 - **Applies GitHub-native formatting** — `<picture>` for dark/light logos, teaser + `docs/` links for deep content, relative links for doc splits, reference-style badges, Mermaid/math only when faster than prose
 - **Generates before/after comparison screenshots** — side-by-side or stacked PNGs via Playwright for case studies and visual proof
+- **Manages GitHub metadata** — generates `.github/repo-meta.yml` with description and 3-tier topic selection for repository discoverability
 - **Ships reusable templates with guidance** — dedicated layouts for general OSS projects and AI agent skills, with benefit-oriented placeholders and HTML comment instructions
 
 ## Quick Start
@@ -79,10 +80,10 @@ npx skills add motiful/readme-craft
 Then tell your AI coding assistant:
 
 ```text
-"Generate a README for this project"
+"Generate a README for this project"    # scans codebase, selects template, fills 3-tier layout
+"Improve this README"                   # evaluates against 45-point checklist, applies targeted fixes
+"Review my README"                      # audits structure, content, and reader experience
 ```
-
-readme-craft scans the codebase, selects a template, fills it with the 3-tier layout, and runs the 44-point checklist before delivering.
 
 ## When to Reach for It
 
@@ -155,29 +156,6 @@ The main README writing and review flow does not require repo-local dependencies
 readme-craft operates in three modes: create from scratch (no code), create from codebase (scan + generate), and improve existing (evaluate + targeted fixes). All three produce READMEs organized by the 3-tier layout strategy with GitHub-native formatting.
 
 → [Operation modes, tier strategy, and formatting details](docs/how-it-works.md)
-
-## What's Inside
-
-```text
-readme-craft/
-├── SKILL.md                                # Skill definition — modes, tiers, and checklist
-├── assets/
-│   ├── universal-readme.md                 # Template for general OSS projects
-│   └── skill-readme.md                     # Template for AI agent skills
-├── references/
-│   ├── badges.md                           # Copy-paste badge patterns by ecosystem
-│   ├── github-formatting.md                # GitHub-native formatting and overflow strategy
-│   ├── logo-generation.md                  # Fallback logo rules, presets, and runtime requirements
-│   ├── logo-examples.md                    # Example mappings from project feel to logo preset
-│   ├── quality-checklist.md                # 44-point quality audit across 6 dimensions
-│   ├── gradient-palettes.md                # 2026-curated gradient palette reference
-│   └── comparison-screenshots.md           # Before/after comparison PNG generation
-└── scripts/
-    ├── generate-logo.mjs                   # Local helper for fallback README wordmarks
-    ├── generate-comparison.mjs             # CLI for before/after comparison PNGs
-    ├── logo/                               # Logo engine modules (figlet, cfonts, SVG)
-    └── comparison/                         # Comparison rendering and screenshot modules
-```
 
 ## Contributing
 
