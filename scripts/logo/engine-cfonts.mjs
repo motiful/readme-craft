@@ -319,11 +319,7 @@ export function generateCfontsSvg(lines, preset, paletteKey) {
 
 export function buildCfontsText(name) {
   const upper = name.toUpperCase();
-  // Split on hyphens/spaces so cfonts renders multi-line (| = line break).
-  // This avoids extreme aspect ratios for long compound names.
-  const words = upper.split(/[-\s]+/);
-  if (words.length > 1) {
-    return words.join('|');
-  }
-  return upper;
+  // Keep as single line — let SVG guardrails handle width.
+  // Use space between words (cfonts renders spaces as gaps).
+  return upper.replace(/[-_]+/g, ' ');
 }
