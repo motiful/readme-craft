@@ -194,6 +194,27 @@ For AI agent skills compatible with Claude Code, Codex, Cursor, Windsurf, GitHub
 [contributors-url]: https://github.com/<org>/<repo>/graphs/contributors
 ```
 
+### Star History
+
+For repos with 100+ stars. Insert as a standalone section before License, using `<picture>` for dark/light mode support.
+
+```markdown
+## Star History
+
+<div align="center">
+  <a href="https://star-history.com/#<org>/<repo>&Date">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=<org>/<repo>&type=Date&theme=dark" />
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=<org>/<repo>&type=Date" />
+      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=<org>/<repo>&type=Date" width="600" />
+    </picture>
+  </a>
+</div>
+```
+
+**Trigger:** `star_count >= 100` (below that it looks sparse and counterproductive).
+**Gate:** Always HITL — ask user before adding.
+
 ---
 
 ## Tips

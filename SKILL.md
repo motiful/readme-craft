@@ -59,6 +59,11 @@ def readme_craft(project_path, user_request):
     readme = apply_3tier_layout(readme)                        # see The 3-Tier Layout Strategy
     readme = apply_github_formatting(readme)                   # references/github-formatting.md
     readme = select_and_apply_badges(readme, state)            # see Badge Selection + references/badges.md
+    if state.has_git_remote:
+        star_count = gh_api_star_count(state.remote)           # gh api repos/{owner}/{repo} --jq .stargazers_count
+        if star_count >= 100:
+            if ask_user(f"This repo has {star_count}⭐ — add a star history chart?"):  # HITL
+                readme = insert_star_history(readme, state.remote)  # references/badges.md § Star History
     readme = apply_tone_voice(readme)                          # see Tone & Voice section
 
     # STEP 6: Quality Check
